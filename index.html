@@ -252,6 +252,19 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 .modal-close:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(123,189,232,0.35); }
 .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ADAPTIVE CARD */
+.ac { background: #f0f0f0; border: 1px solid #ddd; border-radius: 6px; padding: 0.65rem 0.75rem 0.55rem; margin-bottom: 0.1rem; }
+.ac-title { font-size: 0.7rem; font-weight: 700; color: #444; margin-bottom: 0.5rem; letter-spacing: 0.01em; }
+.ac-row { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.22rem; }
+.ac-label { font-size: 0.67rem; color: #888; }
+.ac-value { font-size: 0.67rem; font-weight: 600; color: #111; text-align: right; }
+.ac-divider { height: 1px; background: #ddd; margin: 0.45rem 0 0.4rem; }
+.ac-actions { display: flex; gap: 0.4rem; }
+.ac-btn { font-size: 0.67rem; font-weight: 600; padding: 0.26rem 0.6rem; border-radius: 3px; cursor: default; line-height: 1.4; border: none; }
+.ac-btn.confirm { background: #6264a7; color: #fff; }
+.ac-btn.cancel { background: #fff; color: #6264a7; border: 1px solid #c8c8d8; }
+.invoice-link { color: #6264a7; text-decoration: underline; font-weight: 600; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -259,7 +272,7 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#hero">
-    <img id="nav-logo-img" src="" alt="MoravaSoft">
+    <img id="nav-logo-img" src="data:image/png;base64,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" alt="MoravaSoft">
   </a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -282,8 +295,8 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow" id="hero-eyebrow">AI Finance Assistant · Microsoft Teams + Xero</div>
-      <h1 class="hero-h1" id="hero-h1">Your accounting, fully in control — <em>straight from Teams.</em></h1>
-      <p class="hero-sub" id="hero-sub">MoravaSoft's AI assistant lives inside Microsoft Teams and connects directly to Xero. Raise invoices, chase overdue receivables, log expenses — all through natural conversation, in your language, from wherever you are.</p>
+      <h1 class="hero-h1" id="hero-h1">Your Xero, fully accessible — <em>straight from Teams.</em></h1>
+      <p class="hero-sub" id="hero-sub">MoravaSoft's AI assistant connects Microsoft Teams directly to Xero. Ask questions, raise invoices, log expenses — all through natural conversation, without opening a browser.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary" id="hero-cta1">Request a Demo</a>
         <a href="#how" class="btn-secondary" id="hero-cta2">See How It Works</a>
@@ -295,7 +308,7 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
       <div class="chat-header">
         <div class="chat-avatar-wrap">
           <div class="chat-avatar">
-            <img id="eva-avatar-img" alt="Eva" src="">
+            <img id="nav-logo-img" src="data:image/png;base64,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" alt="MoravaSoft">
           </div>
           <div class="chat-online-dot"></div>
         </div>
@@ -307,36 +320,43 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
       </div>
       <div class="chat-body">
         <div class="chat-date-divider" id="chat-date">Today</div>
-        <div class="msg msg-ai">
-          <div class="msg-bubble" id="chat-ai-brief">
-            ☀️ <strong>Good morning!</strong> Your Xero snapshot:<br><br>
-            <span class="msg-stat">🧾 3 overdue invoices</span>
-            <span class="msg-stat">💰 £14,200 outstanding</span><br>
-            <span class="msg-stat" style="background:rgba(200,169,110,0.15);border-color:rgba(200,169,110,0.4);color:#a07830;">⚠️ 2 bills due today</span>
-            <span class="msg-stat">📥 5 new transactions</span>
-            <div class="msg-time">08:01</div>
-          </div>
-        </div>
+
         <div class="msg msg-user">
           <div class="msg-bubble" id="chat-user">
-            Show me all overdue receivables.
-            <div class="msg-time">08:03</div>
+            Create an invoice for $4,500 to Hargreavess Ltd. for prototype design.
+            <div class="msg-time">09:14</div>
           </div>
         </div>
+
         <div class="msg msg-ai">
           <div class="msg-bubble" id="chat-ai-reply">
-            3 overdue invoices in Xero:<br>
-            • <strong>Hargreaves Ltd</strong> — £4,200 (32 days)<br>
-            • <strong>Singh &amp; Partners</strong> — £6,800 (18 days)<br>
-            • <strong>Blackwood Group</strong> — £3,200 (7 days)<br><br>
-            Send payment reminders to all three?
-            <div class="msg-time">08:03</div>
+            <div class="ac">
+              <div class="ac-title">📋 New Invoice — please confirm</div>
+              <div class="ac-row"><span class="ac-label">Company</span><span class="ac-value">Hargreavess Ltd</span></div>
+              <div class="ac-row"><span class="ac-label">Description</span><span class="ac-value">Prototype design</span></div>
+              <div class="ac-row"><span class="ac-label">Amount</span><span class="ac-value">$4,500.00</span></div>
+              <div class="ac-row"><span class="ac-label">Due Date</span><span class="ac-value">14 May 2026</span></div>
+              <div class="ac-divider"></div>
+              <div class="ac-actions">
+                <button class="ac-btn confirm">Confirm</button>
+                <button class="ac-btn cancel">Cancel</button>
+              </div>
+            </div>
+            <div class="msg-time">09:14</div>
           </div>
         </div>
+
         <div class="msg msg-user">
           <div class="msg-bubble" id="chat-user2">
-            Yes, send reminders to all three.
-            <div class="msg-time">08:04</div>
+            Confirm
+            <div class="msg-time">09:15</div>
+          </div>
+        </div>
+
+        <div class="msg msg-ai">
+          <div class="msg-bubble" id="chat-ai-brief">
+            <a class="invoice-link">INV0032</a> has been created.
+            <div class="msg-time">09:15</div>
           </div>
         </div>
       </div>
@@ -355,33 +375,33 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 <section id="how">
   <div class="section-inner">
     <div class="section-label" id="how-label">The Process</div>
-    <h2 id="how-h2">Your accounts, in your pocket — <em>always one message away</em></h2>
-    <p class="section-intro" id="how-intro">No Xero portal to open. No desktop required. Your finance assistant is available all day inside the Microsoft Teams you already use.</p>
+    <h2 id="how-h2">From message to Xero action — <em>in seconds</em></h2>
+    <p class="section-intro" id="how-intro">No Xero portal to open. No forms to fill in. Ask a question, raise an invoice, or log an expense — just type in Teams and the assistant handles it.</p>
     <div class="steps">
       <div class="step fade-in">
         <div class="step-num">1</div>
         <div class="step-title" id="step-t0">Open Teams</div>
-        <div class="step-desc" id="step-d0">The assistant lives inside Microsoft Teams as a bot. No new software, no separate login — just open the chat and start typing.</div>
+        <div class="step-desc" id="step-d0">The assistant runs inside Microsoft Teams as a bot. No new software, no separate login — open the chat and start typing.</div>
       </div>
       <div class="step fade-in">
         <div class="step-num">2</div>
-        <div class="step-title" id="step-t1">Type Your Request</div>
-        <div class="step-desc" id="step-d1">Write naturally — "Invoice Hargreaves Ltd £2,400, 30-day terms", "What's my cash position?", or "Log an £85 lunch expense." No special syntax needed.</div>
+        <div class="step-title" id="step-t1">Describe the Task</div>
+        <div class="step-desc" id="step-d1">Type what you need: an invoice for a client, or an expense to record. Use plain language — no special format or commands required.</div>
       </div>
       <div class="step fade-in">
         <div class="step-num">3</div>
         <div class="step-title" id="step-t2">AI Understands</div>
-        <div class="step-desc" id="step-d2">The assistant interprets your intent and calls the Xero API securely in the background — detecting language, entities, and action automatically.</div>
+        <div class="step-desc" id="step-d2">The assistant extracts the details — client, amount, date, account code — and prepares the Xero record, ready for your review.</div>
       </div>
       <div class="step fade-in">
         <div class="step-num">4</div>
-        <div class="step-title" id="step-t3">Action or Report</div>
-        <div class="step-desc" id="step-d3">It either executes the action — invoice raised, expense logged, reminder sent — or delivers the financial data you asked for, with your confirmation when needed.</div>
+        <div class="step-title" id="step-t3">You Confirm</div>
+        <div class="step-desc" id="step-d3">The assistant shows you a summary of what it will create. You approve with a single reply — or ask it to adjust any detail first.</div>
       </div>
       <div class="step fade-in">
         <div class="step-num">5</div>
-        <div class="step-title" id="step-t4">Confirms ✓</div>
-        <div class="step-desc" id="step-d4">You receive a clear confirmation with invoice numbers, amounts, or report data — all without leaving Microsoft Teams.</div>
+        <div class="step-title" id="step-t4">Saved in Xero ✓</div>
+        <div class="step-desc" id="step-d4">The invoice or expense is created directly in your Xero organisation via the API. You get a confirmation with the Xero reference number.</div>
       </div>
     </div>
   </div>
@@ -393,37 +413,37 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
     <div class="ao-grid">
       <div class="ao-text">
         <div class="section-label" id="ao-label">Your Always-On Finance Assistant</div>
-        <h2 id="ao-h2">One AI. Replaces a dozen <em>separate conversations.</em></h2>
-        <p id="ao-p1">Before, a simple accounting task meant logging into Xero, navigating menus, finding the right screen — or calling your accountant and waiting for a callback. Checking receivables, raising an invoice, logging an expense — each task interrupted your day.</p>
-        <p id="ao-p2"><strong>With MoravaSoft, it all lives in one chat.</strong> Your AI assistant is permanently connected to Xero and always reachable inside Teams. No portal. No waiting. No context switching.</p>
+        <h2 id="ao-h2">One chat. Your entire Xero. <em>Always within reach.</em></h2>
+        <p id="ao-p1">Before, any Xero task meant stopping what you were doing, opening a browser, logging in, and navigating to the right screen. Whether you wanted to check an invoice, log an expense, or answer a quick financial question — each one pulled you away from your work.</p>
+        <p id="ao-p2"><strong>With MoravaSoft, your Xero is always one message away.</strong> The assistant is permanently connected to your Xero organisation via a secure API. Ask it a question or give it an action to carry out — it responds in seconds, without you ever leaving Teams.</p>
       </div>
       <div class="ao-pillars">
         <div class="ao-pillar fade-in">
           <div class="ao-pillar-icon">🕐</div>
           <div>
             <div class="ao-pillar-title" id="ao-t1">Available whenever you need it</div>
-            <div class="ao-pillar-desc" id="ao-d1">Whether it's a Friday afternoon or a Sunday evening — the assistant is always ready. No office hours, no waiting for your accountant to be free.</div>
+            <div class="ao-pillar-desc" id="ao-d1">On-site with a client, travelling, or working late — the assistant is always ready. Raise an invoice or log an expense the moment it happens, not when you're back at your desk.</div>
           </div>
         </div>
         <div class="ao-pillar fade-in">
           <div class="ao-pillar-icon">🔗</div>
           <div>
-            <div class="ao-pillar-title" id="ao-t2">Live connection to Xero</div>
-            <div class="ao-pillar-desc" id="ao-d2">No copying data between systems. The assistant reads and writes directly to Xero via a secure OAuth 2.0 connection — invoices, expenses, reports, and account entries, instantly.</div>
+            <div class="ao-pillar-title" id="ao-t2">Writes directly to Xero</div>
+            <div class="ao-pillar-desc" id="ao-d2">Every invoice and expense is created via the Xero API in real time. The record appears in your Xero organisation immediately — no sync, no import, no delay.</div>
           </div>
         </div>
         <div class="ao-pillar fade-in">
           <div class="ao-pillar-icon">💬</div>
           <div>
             <div class="ao-pillar-title" id="ao-t3">Natural language, any language</div>
-            <div class="ao-pillar-desc" id="ao-d3">Ask in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically and responds accordingly. No commands to memorise.</div>
+            <div class="ao-pillar-desc" id="ao-d3">Type in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically. No commands to learn, no rigid format to follow.</div>
           </div>
         </div>
         <div class="ao-pillar fade-in">
-          <div class="ao-pillar-icon">📱</div>
+          <div class="ao-pillar-icon">✅</div>
           <div>
-            <div class="ao-pillar-title" id="ao-t4">Works wherever Teams works</div>
-            <div class="ao-pillar-desc" id="ao-d4">On your laptop, phone, or tablet — the assistant travels with you. Full accounting access from any device, any location, through the Teams app you already have.</div>
+            <div class="ao-pillar-title" id="ao-t4">Always confirms before saving</div>
+            <div class="ao-pillar-desc" id="ao-d4">The assistant shows you what it will create and waits for your approval. You stay in control — nothing is written to Xero without your explicit confirmation.</div>
           </div>
         </div>
       </div>
@@ -435,41 +455,48 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 <section id="usecases">
   <div class="section-inner">
     <div class="section-label" id="cases-label">What It Does</div>
-    <h2 id="cases-h2">Your accounting command centre, <em>right inside Teams.</em></h2>
-    <p class="section-intro" id="cases-intro">From raising invoices to chasing overdue payments and pulling real-time financial snapshots — the assistant gives finance teams and business owners immediate access to their Xero data through simple conversation.</p>
+    <h2 id="cases-h2">Built on Xero. <em>Used from Teams.</em></h2>
+    <p class="section-intro" id="cases-intro">The assistant can query your Xero data and take actions on your behalf. Right now it focuses on invoice creation and expense logging — the two tasks that interrupt most working days. More Xero capabilities are on the way.</p>
     <div class="cases-grid">
 
       <div class="case-card fade-in">
         <div class="case-icon">🧾</div>
-        <div class="case-category" id="case-cat0">Invoicing &amp; Receivables</div>
-        <div class="case-title" id="case-title0">Raise Invoices and Chase Payments by Chat</div>
+        <div class="case-category" id="case-cat0">Invoice Creation</div>
+        <div class="case-title" id="case-title0">Raise a Xero Invoice by Chat</div>
         <ul class="case-bullets" id="case-bullets0">
-          <li>Raise a sales invoice with a single message — contact, amount, line items, and due date</li>
-          <li>Check the payment status of any invoice by client name or invoice number in Xero</li>
-          <li>View all overdue receivables ranked by age and amount, instantly</li>
-          <li>Send payment reminder emails to one or multiple contacts in one request</li>
-          <li>Query revenue by contact, date range, or account code</li>
+          <li>Create a sales invoice by typing the contact name, amount, and due date — the assistant fills in the rest</li>
+          <li>Specify line items, quantities, and account codes conversationally in a follow-up message</li>
+          <li>Choose Draft or Approved status — both are supported via the Xero Invoices API</li>
+          <li>Send the invoice to your Xero contact's email directly from the Teams chat</li>
+          <li>Look up any existing invoice in Xero by contact name or invoice number</li>
         </ul>
         <div class="briefing-preview">
           <div class="briefing-preview-label" id="bp-label">Sample Interactions</div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line1">"Invoice Hargreaves Ltd £2,400, 30-day terms" → <span class="bl-val">INV-0084 raised in Xero.</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line2">"Who owes me the most?" → <span class="bl-val">Singh &amp; Partners, £6,800</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line3">"Send reminders to overdue contacts" → <span class="bl-val">3 reminders sent.</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line4">"Revenue this month vs last" → <span class="bl-val">£38,400 vs £31,200 (+23%)</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line1">"Invoice Hargreavess Ltd $2,400, 30 days" &rarr; <span class="bl-val">INV-0087 created in Xero</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line2">"Add line: 8hrs consulting at $300" &rarr; <span class="bl-val">Line item added</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line3">"Send it to the contact" &rarr; <span class="bl-val">Sent to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dbbab8b8b4aeb5afa89bb3baa9bca9bebaadbea8f5b8b4f5aeb0">[email&#160;protected]</a></span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line4">"Show my draft invoices" &rarr; <span class="bl-val">3 drafts found in Xero</span></span></div>
         </div>
       </div>
 
       <div class="case-card fade-in">
-        <div class="case-icon">📊</div>
-        <div class="case-category" id="case-cat1">Expenses &amp; Financial Reporting</div>
-        <div class="case-title" id="case-title1">Log Expenses and Pull Reports Instantly</div>
+        <div class="case-icon">🧾</div>
+        <div class="case-category" id="case-cat1">Expense Logging</div>
+        <div class="case-title" id="case-title1">Record an Expense in Xero by Chat</div>
         <ul class="case-bullets" id="case-bullets1">
-          <li>Log an expense in seconds: "£85 client lunch, charge to Blackwood project"</li>
-          <li>Pull a real-time cash position, P&amp;L summary, or balance sheet on demand from Xero</li>
-          <li>View upcoming bills and flag any due today or this week</li>
-          <li>Query transactions by date, amount, supplier, or account code</li>
-          <li>Generate a VAT return summary or period report with a single request</li>
+          <li>Log a spend money transaction by describing what you bought — amount, supplier, and date</li>
+          <li>Assign to a Xero account code and tracking category in the same message</li>
+          <li>The expense is saved to Xero as an unreconciled bank transaction via the Bank Transactions API</li>
+          <li>Review the summary before it is saved — adjust any field with a follow-up message</li>
+          <li>Query your logged expenses for any date range by simply asking</li>
         </ul>
+        <div class="briefing-preview">
+          <div class="briefing-preview-label" id="bp-label2">Sample Interactions</div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line5">"Log $85 client lunch, charge to marketing" &rarr; <span class="bl-val">EXP-0021 saved in Xero</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line6">"Supplier: Premier Inn, $240 hotel stay" &rarr; <span class="bl-val">EXP-0022 created</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line7">"Assign to project Alpha" &rarr; <span class="bl-val">Tracking category updated</span></span></div>
+          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line8">"What did I expense this week?" &rarr; <span class="bl-val">3 expenses, total $397.50</span></span></div>
+        </div>
       </div>
 
     </div>
@@ -477,15 +504,12 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
     <div class="also-possible">
       <div class="also-label" id="also-label">Also available through the same assistant</div>
       <div class="also-chips" id="also-chips">
-        <span>Purchase orders</span>
-        <span>Bank reconciliation</span>
-        <span>VAT returns</span>
-        <span>Supplier payments</span>
-        <span>Budget vs actual</span>
-        <span>Account tracking</span>
-        <span>Customer statements</span>
-        <span>Credit notes</span>
-        <span>Project billing</span>
+        <span>Check invoice status</span>
+        <span>View overdue receivables</span>
+        <span>Look up contact balances</span>
+        <span>Record supplier bills</span>
+        <span>Query recent transactions</span>
+        <span>Check account balances</span>
         <span>+ more on request</span>
       </div>
     </div>
@@ -523,7 +547,7 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
         </div>
       </div>
     </div>
-    <p class="int-note" id="int-note">Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · Read/write scoped to invoices, expenses, and reports only · Works on any device with Teams</p>
+    <p class="int-note" id="int-note">Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · API access scoped to invoices and bank transactions only · Works on any device with Teams</p>
   </div>
 </section>
 
@@ -534,15 +558,15 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
       <div class="about-text">
         <div class="section-label" id="about-label">About Us</div>
         <h2 id="about-h2">Small team. <em>Big impact.</em></h2>
-        <p id="about-p1">MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams access their Xero data through the tools they already use every day.</p>
-        <p id="about-p2">Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We embed your finance assistant directly there — so raising an invoice or checking your cash position takes one message, not five minutes of Xero navigation.</p>
-        <p id="about-p3">We work closely with each client to understand their accounting workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.</p>
+        <p id="about-p1">MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams get things done in Xero through the tools they already use every day.</p>
+        <p id="about-p2">Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We put your Xero assistant right there — so raising an invoice or logging an expense takes one message, not a trip to the portal.</p>
+        <p id="about-p3">We work closely with each client to understand their workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.</p>
         <div class="location-tag" id="about-location">📍 Morava, Czech Republic · Founded 2026</div>
       </div>
       <div class="about-stats">
         <div class="stat-card fade-in">
           <div class="stat-num">24/7</div>
-          <div class="stat-label" id="stat-label0">Your finance assistant is always on, always ready</div>
+          <div class="stat-label" id="stat-label0">Raise invoices and log expenses any time, from anywhere</div>
         </div>
         <div class="stat-card fade-in">
           <div class="stat-num">0</div>
@@ -550,11 +574,11 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
         </div>
         <div class="stat-card fade-in">
           <div class="stat-num">Live</div>
-          <div class="stat-label" id="stat-label2">Real-time data read and written directly in Xero</div>
+          <div class="stat-label" id="stat-label2">Records written directly to Xero via the API in real time</div>
         </div>
         <div class="stat-card fade-in">
           <div class="stat-num">&lt; 10s</div>
-          <div class="stat-label" id="stat-label3">Average response time for invoice creation and financial queries</div>
+          <div class="stat-label" id="stat-label3">From message to confirmed Xero record</div>
         </div>
       </div>
     </div>
@@ -565,8 +589,8 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 <section id="cta-banner">
   <div class="cta-inner">
     <div class="cta-text">
-      <h2 id="cta-h2">Ready to run your accounting from Teams?</h2>
-      <p id="cta-p">Book a live demo and we'll show you the assistant raising invoices, pulling receivables reports, and logging expenses — live from a real Xero organisation.</p>
+      <h2 id="cta-h2">Ready to put Xero inside Teams?</h2>
+      <p id="cta-p">Book a live demo and we will show you the assistant answering Xero queries, creating a real invoice, and logging an expense — all from a Teams chat, written directly into a live Xero organisation.</p>
     </div>
     <a href="#contact" class="btn-primary" id="cta-btn">Request a Free Demo</a>
   </div>
@@ -579,8 +603,8 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
       <div class="contact-info">
         <div class="section-label" id="contact-label">Contact</div>
         <h3 id="contact-h3">Let's set up your demo</h3>
-        <p id="contact-p">Tell us a bit about your setup — your Xero subscription, company size, and the accounting tasks you most want to automate. We'll tailor the demo to your situation and respond within one business day.</p>
-        <div class="contact-detail"><span>✉</span><a href="mailto:info@moravasoft.com">info@moravasoft.com</a></div>
+        <p id="contact-p">Tell us about your Xero setup — your company size and how your team currently handles invoicing and expenses. We'll tailor the demo to your situation and respond within one business day.</p>
+        <div class="contact-detail"><span>✉</span><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#111;&#114;&#97;&#118;&#97;&#115;&#111;&#102;&#116;&#46;&#99;&#111;&#109;">&#105;&#110;&#102;&#111;&#64;&#109;&#111;&#114;&#97;&#118;&#97;&#115;&#111;&#102;&#116;&#46;&#99;&#111;&#109;</a></div>
         <div class="contact-detail"><span>📍</span><span id="contact-address">Morava, Czech Republic</span></div>
         <div class="contact-detail"><span>🕐</span><span id="contact-hours">Mon–Fri, CET business hours</span></div>
       </div>
@@ -619,10 +643,10 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
             </select>
           </div>
           <div class="form-group">
-            <label id="f-msg-lbl">Tell us about your accounting setup *</label>
-            <textarea id="f-msg" name="message" required placeholder="e.g. We use Xero for invoicing and expense management, team of 15. We want to raise invoices and check receivables without leaving Teams…"></textarea>
+            <label id="f-msg-lbl">Tell us about your setup *</label>
+            <textarea id="f-msg" name="message" required placeholder="e.g. We use Xero and Microsoft Teams. Our team raises around 50 invoices a month and I want to be able to do it without opening Xero each time..."></textarea>
           </div>
-          <button type="submit" class="form-submit" id="f-submit">Send Message →</button>
+          <button type="submit" class="form-submit" id="f-submit">Send Message &#8594;</button>
           <p class="form-note" id="f-note">We'll respond within 1 business day. No spam, ever.</p>
         </form>
       </div>
@@ -633,7 +657,7 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="" alt="MoravaSoft">
+    <img id="nav-logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL4AAABACAYAAACk7M30AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAABqPSURBVHic7Z17fFTVufd/v7VnEgIkBJDc5KJWawW0crFcinpC8Fq1R1sCFaunttW2yK2Xc4RA3+kRUM9bjxfseY/2vG1tz4sQrNeWos3FqoVwKVjU11uVWyGTYBLuSWZmr9/5I7c9k5kkBCIR5/v5TD7Za6+19rP3/GbtZz372XsDvZTFJVXTFpftPf9U25Hk9MR3qg1IjM0knMOn2ookpye9VviWzASYFH6SHqHXCp9gJqySwk/SI/Ra4QMawOSIn6SH6MXCR6alPXKqjUhyetJrhU8gk0qO+El6hl4rfAGZYtLHT9Iz9Frhg0qO+El6jN4rfCXDmUl6jl4rfIGZBklXJ0nPYHqiUwncWjxnyIn0QShTQOaJ9PHnX38n60TaJzl96RHhv/xywAmJ928pXnBhd9rfsUV+AP2g7gt/0+rZl5mUlMXdbZ/k9KZHhJ+fH4hE+hyZF6E7f+OqOZ8/3vaDjwUzARDsnvC3FM+b4tI3s65aP+pO+ySnPz0ifACY8uVfHI6kHJkvh3OPV/xOg9Mi+LQ5a99PPZ62W4rnTQkDN9cF7YJr565oPJ62ST499Jjwge6Ln8ZtHenTUzK6POonRZ+kq/So8IEm8aNRCwQzq6ttXJhWsRsT6ZLw1xdPTwtL1+/BwPlJ0SfpDJ5qA+JRVFo5HWAxABhi4j1TczaeapuSnF70+IjfHSjvDShKJqolOen0SuFXZw4pBVgH6L17pua+dartSXL60aUrt4tLqq8W7I2x5X7HFgXy8z6K16aotHI6xGmx5fszs+96fDzDHW3v8fEMF5VVPQ9xT1fsW1RW+SVa3pBovYhGQu8Zyz/dc0XOG13pEwAWlwSXCxgc1ZfR88un5v4+ul7lbIEXtdXhn5dPzf51xzZXLaHV0JZlAi8snZbzO2+dorLK78EyKihAcOvSadmPdcX+9cULzqXcbxO6FMBQgn0k1ICsIbRT0hYYs6V+yMCK/PxAJFE/m3+74Bw34s4ScTmFYQAGEzggYh8s/iyYNZNmPrQ1UfsNq+d9m9KlXbEZQP3EmY/cKYEbV899oott2kHZRyZ87dEtidZ3SfjW2DEU7ogtD1uzA8B9seWBcvnCqnoAwLDYdf1Cf58PIL7wJS4srZ5I4kpAZwpMX1QWXOiAa++Zmv3XRPbRmnGg2tnXur75rzVAUWmwVOKs5dOyqxLVB4CFJZUjRSxsvy1eBOD30aUmErV96brpxfp/awrpxus78NL+vLDc/wXCaSmzsFFiDrywr29YvA9Eurdc0MEF6/f8+sHJw+o7sn/DqrnfMnIfFZDacgQEAMQQQBDwRZCzIKFf8NBwAO0GmbVr56QOOswH3Ih7JwAf5bUDgyF8BsSlhP2XDavnPis635pc+GBtbD+EnQLy6x3Z6+EIgDvXrJluhhNdbdMO0XkOQELhn5CrQ+C7gXK1+/FE3OA/Qu1F3xFLyvaNKyqrqjDUekIBCNMI3URhuZVeLyoNvnh3efW5J2JvMwWEnoXU4cTegfmnuCuIiQvL933OWxSWfxWA+rYqyDt/cNXlifoOm8gtQJvoAby1vCAvasQMpTk3AdGib2ZA33rfdR3Zvv7JuZNJPNYk+u7RLPqXAMxG5wMkCdzoyN3056c/GWkiJ5SkJmB4RNU3AHg6qpxmTvP40iWKSoPXW2E1gLQOql3pWLuxqDz4pWX5ORWddLlX0AqKjgzzKE0H0PaFEBOXlAbH3wNsjtc4EJAJsfpriX4ZRubrAIpalu+/YtDBxaXBFwQUtpRJmAWgLG4HZExol79qV8XotoSHULwNwJoEa+EYzJN3UCM2wuIhiTscwspoqIRLIHwVxHnx+hh0mP8O4LJoo/QygJ8B3AEhm8BtUfsMfMYJpz4JoCCRbc3skOIfGxINADB9+hpbsXru/42z/mIA4zxFNRKejdPTjo4M6K7whebzp6A58Ah/SVnV5610WWy9RCwpqxxlhSfRXvR7AfjhFSwwCBbPLnpl/5jllw2pTNwrg8sLcu5vWVpYsv8RQ/cdry0WGIkEwo9M2X8l0eZ/A9gOYDTaxPT1QEBLAgHatk3qCYiFbcv46oL1e+6KdUma9/ciT5ELOE966wTK/z40bDHVUxRstj27ue+rAuXVOYH8rGA8+wWN9eyqfBH/deNvfsA7F9sM4BkAiyqK54476jTUeduvL15wLuTeGdPtUxP+/+AZDASsp2xtxap574D6sWfrUzesuuuaSTMf/UM825rMx+aJMx/5VqL1AEBCQPs6G1bPWUxwnKfe7okzOu4rHt1zdagXATT5r8I/LCqpav0ibdMPoaXius66ssBPAfTzFK2laz67rCBn6LKCnGzBjhPgjeNnM+z+5HjMvXfakPcARE3CZZDYR6a9Laou8TCo9W0FGBa6rCrfW8fHnJfQJNAWMuK5JBbm1piNvbSs4Iy93pKQfF+H57sRsFrkU97NhV3dnNB+sK93IWzchJmyEwsf+Ut+4X9EhYyN7G3wuGIEGl1/aHaM6AEA9dkD7wEQNbqS5vbEtvUOujfiCzsF/J7ADQBAaDaAO+9+dddAhPC1tmp2BcFrEnVzd3nlWbC82lNU/l5N9g3eSeHygrytP3wxWJDqw2YAFzQX3xJ4Yd/8wPV5x7pi7sKSvw8GMMi7BwY27mQ5sLYmI4ywN0IUSgmFnw37fX0BTGkppHQbgNLWdvmMFJVVroT4/batcBY8LkkgIBNGVevxAQBJ7aI/VPSkjgarrOv6STPbU+kbAP497g4TH0DIa12k3bhh1dxiki9bx90y6c0z3osnYk/fl8e4WeVfvOk/q+NVzc8PRCpWzXsKbEsIJJBwfgMAInI3Fs/5UtyV1r4/YebP3uuo/cmg25NbI64Amj15g68veXHfOCeU+mMBfdlUvps20heM9nRS633fXFRaeU3gtf15PouoUdOSS9YU0pXAjcXzvllRPOerAPDTq3KOiljqqZoW6mcmFZXWjVhYFrxB0HhvPyTyisqDixe9VPkvi8qrl5K+l+EdwchnfLtCu+LtVyQ1PANA24gp/CFw9bBa68dqAJ6QH2/659f2R0dcyF9GdUZcGyjfd0bLYmhK8PKYSf+hlHr7vLdJUWnlF9D2AweB3cv+IXvjvQW5rwHw2jx6SVlV/Pwn6VcxJekkvgnoN8Y1b2+8oHZfxeq5v9hYPOdLUhxXVDjbu2ibXL3EGEWFiAUMKS/+Xv+E9YVLJf4u3gdwbk3Y7iTSofAXlgUnFJVXz4A4tsXi5sM0VnAvgrCXAiCkyW++TXEGm0JloPDY0dQ+66XogaV2gH6Rkqq3GhvCX5DMDO9hP9JwaAsAbCyee42k/4K4ZvOquaMBwNJsAprCB2oy5Q6hYSRDzmaCnrCVICkXLu6hw/uMbBGb/HMAiFBcJ6vi0Ii0mxeVV/2gqDS4eHFZcOGiPwYXFJXu+46gH9JrFLEaAO69LHc/iJc9u9LP3xC5ybtvy/Nz3oTwuqfIH7HO9NauTOykFqvbnbVkot0sYCVIgRQhr7sDt+ms044JhSt+KeA/461rJhvANyT+bmPxvJItxXcMiFk/0LtA4EAHfUFSu/Xp8A+KV7e30KHw5W98z4W7EdSe1nlq0xBfQ3A3DEtg2DwTMbfLIBc0IHAMtHvSQnYCW6KGbPoMOuS/IBTiRDrmDAAfyHNK7d+/fwYAOOQHAA4BqKT1BwHAr8gAAJAASjDSu6QZRr+dCGpI6zqwdVtNO9HWP2k+kOGrdEx/kCEKO2W1zVpViKxQ2O4BzHlqa3TMb8wLrcejKfLk7bC98IiYiy6aBQCB8h19IHzFu8aSUXUDxW+lgCr0lhlyVWvXMdsnMKv5pp0Ys6BJMx75LmkLAPw3OhSupkZsnxUx/Ub9GDsLixqZPu0KI76O3NAImuL17T4iPpYEww59/PsuHVEHoG5RWXB/dHDG7lo6LfepwAv71ob7OjcAGghEfQE/9zemPncsDRnGRgCoSZUgfJHGAUelkgevHla7uCR4HYDvtTRyQuYmAI9dUvjwu1teuCM3rT4vMurmQAgAZM1XWk0gQYs1S6dmv7HouQ+z2S/tOpBoOtsYQPaIgK3G0C+LsWj+4iR7PoAfRGgm3Jef/bfY/V1cWhkQouL7rzW4yrq7pCoLAGjc12GNRduAcXlR6b4RywryWl0QfwQrwz78G5oiUhAw+e6SqnMirh0bdWMNsePe/Ky2CTOAyBlnXAfpDE+dPWGLw3eXVJ0DAGGgxkD7iFb/PSvrQNVVAKKu+LYwofDRMgBlWx67w+8O7Dte0mRQV0KYhuhw58y//vqH3/38rT892nScVA1ySNtqnd2ucy/GnhV92BAa9156uwtZbf3h6QkzHpnRYZ89zAldwApcn3dMaOdPypXzH4FrBx86kD6oqm3IbTowR9O14cGrh9UCwNG+4VIArQlpopYv+WPwQgAYf/3jx0YVNol+UUllvojve7bxYUvqwfIvn1MFmCbhsXl2AfPu8oLcy5fm50x2xZEEdnvaDnKs2sWHIVFod3XxSof6oOUDazYj+pgZwES1CVyVUw3gRU8RjcEsGxu7t/wVyKgppI11XYRh3u071Ace0TdVITv1icff+Xh4QuFDGybOePiBiYWPXAVGBRQAwB9KCbWKW2DMdRJOVSCQUCtCbGoKN3c4ee4FnHCSmgF/BsC7k79vDh92yoOTh9UT8kYmBlmDDUVllQ8UlQavLyqturGoNPg4yRfhOd0SWtq+t/jcNy37Qwt9J7pUly0uC0bl9iwsD14G4Jyu9uvhttirwJSeiFm+ncC1XgPo6jdR23+lcgiBhBGwxOjLzVGrViqK500pLw8kPJvvxr4yAKGoQuPJn6Kei2kydNPIum/E62tj8fxJzWeQtubQ8/Hq9iZOWPhLC7I/EPFzgH8B+BdJ8UNsCfDV1C4n9KqnqF9zSPB5QE8D+Daa3QYAEPCs79Wc40peWl6Q+weAr3jLJAW8gjWK4693jXOLyqoneQt8tbXPA6jxFJ0FIKVlgcArS6/KiYp9OyHeDM9+Hgcphv7pUSWy/5ZWXftexeq5SzatXDDKO1pveewO/3Dk/chrD4CGMEzrWXFi4YrfAYgK90p6dOOqebcWF09vjY5VrJpzpWSfQbSOahRWRxPrXsFJea7O8qk53+m8VnwChaNCC0v+fqOhbw0QHd5sco+8s1OsTjlqb4+6YtpFJCwl8ZKnszGLyoPXLgd+v2D9njTU46bo+rxy+bTsP8brq6g0uBLwXK+gbgXQ6q8HCkeFFpVWFhP8bgJr2v1wRd0WPY/ij5YVZP80wfbvBnCvx9jb0D6KczaAf7WO+68bL6g7WLF67l4QkYgwDFJU1AbEC5MLH2zLNSK0aaUzyzpuBYCWsGQfUU8MV+6DFavn7ASYCyA3ZpsWwK0Tb1lxKP5+9x56RT7+vdOG1vhfzZ5G6PaocGCTC2wJbKB447KpOTO7etEqluXTsv9I4M/eMsr8BBL7Hku5CYA3pFed4mSVJ+qLxKqoZWHmgvV7olIuaJgoLbk+bFOjcpuWlFWOAjjGUyTATZiLE7F2JbwjQpzEuWg0AMBINKVKDIxZudcH/jC2xRdufvAtyVyu6PkRAAwCOBbtRX8E1IyJMx5Zm9iO3kOvED4ABAK0Swtyf7lsWs4YiTkwuI/gj60iWUsLciYvnZYdJxHpOKGWRxdo3OLS/VeB7SaVqwL5TJif7vuoZh0Ab9RiQFqD73pvneZEunfa24Cn779i0EFvkRX+KboKXvFGimK5/4q83VBUGgcca25p+d/Q+R6AH5NYj5bUkvYcJvBfhpHx4wsfjhU3AGDSzIe2RiLhiwX8BEJcewjsB/AzY30jJxaueCpend5Ir7znNrBuz6CIzzfVEv1TdjesCnzj7IZTbdMnlfXFC9IchHNc1+Q6xmSJOmrhBlPqQu+Mv/PxDm8IimXDk/PPcoyGCxxkLQ74HFWOn/7we00JZR3jvULclfo93VevFP7i0uBUuGaPHHeg8Tnhey7P2naqbUpyetFrXB0v1uKsdw8M+dAfjvxNbicXT5Ik6QYfm/ArfjtnaOe1mqEN5fSHD6mRFAvTpUvYCgTMa8/dldd5zSRJPibhb1o9+zJEeHdX61OoH5y2M60BmX0Qcbvk3/9hUI3f12CWtiS1JUnSET0u/JYHuNZW6QddbUPHVx9q7J/mM/VpdNjhTdUtXDt3RWOkz5F5roMFFU/Nu6jzFkk+zfTo5La7z7JcVFKZb/zcaSPOQMcnHc/k9rXnbk/3hfo/RFePTJi5IuGTGbpLoLw6x5UzGJGGTBlnoMABBDNBmykoE2BmU6ZcB1AhgAdA1dGwTq4OyDEHbMQe6ONE6oDUYCA/K/kgrR6kx4R/Ig9wXVhSNQmwB33WDhRZu/SKvLePp/2Jij9QXp3TGHbPp8+MMMAIWZ0lYgSBz6DtSmYPwwOCdlHYRcOdFtiliN1lnD47lxUMTBjjT9I1euRVQFsee8wf0ZtX7eHg+YVzA6HOW0RDG653fKlpYYTS0EVXx8uUL//icMV/z1lg/fw+YnJOvAQCMscu23eez2IM6Xxe4hhSo8PWphqHgNTyLJpTEPdVJoFMEJ9Xc+CaDgE0YlFp5UcEtwHcKmpbSp+0bYHJAxKmAX+aCJRUnQPb2BC4YlhlbParl94Zxy/bf77c8BDSZFpwc2cPf+oqC9btGZTu93/RQuMAjhFwEWJHcKmGxBELHKFMPQyOAjhCqwZBR0kcBo3bVFUpkPq23xL7C8gwVAZg0kVkAMqA4j4n56RAaJfAbbTcKmibv8Fu7256xyeJQPmec0NKmUzgLFjuQn1jybLrh+3trF2vfPmbLyVcH2pw0kCbltLoP+4Rv4VAuXxhp2YsGiNT4WgKYTJdaKeEIMjXaPm0jIKQux9hf+VHZ5zxUWePNzwhJM5/eeeANNefBevk0jCX5FBAZ0LIheGZzf8f9w9E4AgAI2T0jwAQ7mvcotLKdwVuA7kV9G9NwcB3OkrF6O3c/btdA5XmvzAFzkgrjQF4Udhqi1z71PsHchI+uS4evXLEX/hK5RAT5kSAmcMHZK268zjEGHhLKZGPqs6MhDTCOMyD4X5D/c1ns/ecjC9d5QFf6e79A9LTmKGImw5fSgakDEOmu7IZENMJtqUgO7JW0W9vpFUDiTprccA69kAq/LVpCNeOan7Mx4J1ewb196Wcb8HPgvZzIM8TdD6FnBOxnVADgO0Ct1Pu3yzMhylK/eCtuoF7j0c0PU2gXL6IrR4BapQVLiQwSuAoQnkAjgIoo/i8zzm2LpDfvXSWXin8f35uf3pquq4Rkb40P6v93VI9iARuXvOj7LANDTOOHUZxGMRhhIZZYbghsm304/9OGkaIiDoAmirB7jTkTlrsdC139U3171iZvqgxxW8/Kzc8WsYZS6txgs7FCX6PBEMAdon6kNCHVtptjD8oa2ttxK1N7W9qEcquPRkDR6Bcvoaju9NtX1+WD85QWjNUtEMNdaaA4YA5k1KOor2RKgElBlybNfzQn+aed94J35fbK4VfXCznr4OCtxD0LZ2W02PCV3nAt23/4c9GFB7tWl1Ig9GAuUBQR48yPGUY8KiFdhmY9yG7HbKvbx9yy55dPHeUpTuOVuNAjm26B7pHOAioBjA1YPQN6bCKoGk0bjE2FUB/Cf0pDRDR3wD9Bba/MT0Woh7gJlqWu3DK7y0Y9HZHE9UW3ir+Xv/D8J0fcsy+S9/IrOro9sdeKXwAWFwS/CYAnEzhb3hy/lnGYJJkL5LhaMp+Ts1uCcXDoK0i+BGAQwIaIRwGcYxUgwWOGMNjsJ24XVZ9RaRCTAc0AEQ6wXTBZkhMJ5Xe9Ohxduduq3Y0nyXeJ/C6xNdh/Nv/lPdtty6cebFjNV7AJQQ/hx46S50MBO4DsNUBNoLu5qqM3O1dmWsVFwdShttDY8HIFEF9KL5RW611XQmf98rJ7cli49OzByvkTJE03hjmWdgQoJ0yeBc0r9DVfp9jqg8fHVid/43Ax5b6LIHbn/nhkIZQYy58JkeuPVNAnqHJFpAHaYSALr0g2xI+gBcIuADE16AwLt/7f+oBvQngrxAerAsPeefVvG/2I5xRgEaCuADCOWh/M0lPc0jgB4T9AOLbgt5Qer/t907IqOm8KfDak3fl+cjRAkfT4Ri5NUNpsNY4vt9e8pUHPzweQ067EX/Llsf89v2/5kSsk2v8JsWmNe6Y9Jecyt5+138s5c/Mz0xp1Hk+g/MgnQfgPAnnit0TK4kDFF8X7HbCvClHH27qe3XV3/0Xn5lCjACZa4EsgjkisggNkNCfQDpgMgCAUF9F36t7CKAFbBgyBwUcBO1BigdI7Ie4R0ZBY3z7HIV2JHqJSCwSuH7l7OE+4x8N446WMaMpjbLCYAg1BF40Dl645K1BFd39Xnut8ItK930HcI4uK8j+Tee1Pz2889zt6bVH+l1g/LwY0liIF3f7xwBYgJWA3QlwJ4idFHcZYqcDWztmyOA6dvCmlBOh5InZg9NTzVAXZphDDbXQMAMz1MoOJzFU3sgYuIdgSVjuun0muLmwcM0JR6B6rfAXlQa/ZaQDS6flfmJuZztVbCr+UU4EjRfTYhwNLoZ44cmaoFM4KoM6gLWE6mRxgIZ1sB08bRqAIMcQGZZKN5YDrGGGkTJApMtigJjYzSZxjOImwf7J8flePl43piv0Wh+fhvVWTrcvXn2a+ELh/w4CWNf8gcoDvg3BmgtpMB4Wl9BwbFfnDLGI6AehH6ChLekbkro0ZNrmDiwBSM3LaNeWwH4C2yy0SRZbGnIGv9HRO7lOBr1X+EK9upiLnySaZvdkW/Pn5wBQsXJeNn3uKCtnNGFHkjxbwNlS918XdNx2Nb2E70Mr7iDxjnHxphXfnHjzwyclJeV46LXCR8Q20DHJEf8k0SyuKnheT6RAwGy8sCYPrjkLsDmSyTNSFohcERkEMqxFBsl+lPrZOO4JhQjIo5COweAQgIO0OCiiWmCQtPscOZWyod2XvJu195MWZPjYWVRSmb/kT9VjOq+Z5OOm/JeBzi9C9XJ67Yif4jS8fbDed9wpzUl6no/zmkeSJEmSJEmSJEmS4+Z/AFFzcAwCq75gAAAAAElFTkSuQmCC" alt="MoravaSoft">
   </div>
   <p class="footer-copy" id="footer-copy">2026 MoravaSoft · Morava, Czech Republic</p>
   <ul class="footer-links">
@@ -644,285 +668,334 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
   </ul>
 </footer>
 
-<script>
-const T = {
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var T = {
   en: {
     navHow: "How It Works", navCases: "What It Does", navAbout: "About", navDemo: "Get a Demo",
     heroEyebrow: "AI Finance Assistant · Microsoft Teams + Xero",
-    heroH1: 'Your accounting, fully in control — <em>straight from Teams.</em>',
-    heroSub: "MoravaSoft's AI assistant lives inside Microsoft Teams and connects directly to Xero. Raise invoices, chase overdue receivables, log expenses — all through natural conversation, in your language, from wherever you are.",
+    heroH1: "Your Xero, fully accessible — <em>straight from Teams.</em>",
+    heroSub: "MoravaSoft's AI assistant connects Microsoft Teams directly to Xero. Ask questions, raise invoices, log expenses — all through natural conversation, without opening a browser.",
     heroCta1: "Request a Demo", heroCta2: "See How It Works",
-    chatTitle: "Eva", chatStatusText: "● Available", chatDate: "Today",
-    chatAiBrief: '☀️ <strong>Good morning!</strong> Your Xero snapshot:<br><br><span class="msg-stat">🧾 3 overdue invoices</span><span class="msg-stat">💰 £14,200 outstanding</span><br><span class="msg-stat" style="background:rgba(200,169,110,0.12);border-color:rgba(200,169,110,0.3);color:#c8a96e;">⚠️ 2 bills due today</span><span class="msg-stat">📥 5 new transactions</span><div class="msg-time">08:01</div>',
-    chatUser: 'Show me all overdue receivables.<div class="msg-time">08:03</div>',
-    chatAiReply: '3 overdue invoices in Xero:<br>• <strong>Hargreaves Ltd</strong> — £4,200 (32 days)<br>• <strong>Singh &amp; Partners</strong> — £6,800 (18 days)<br>• <strong>Blackwood Group</strong> — £3,200 (7 days)<br><br>Send payment reminders to all three?<div class="msg-time">08:03</div>',
-    chatUser2: 'Yes, send reminders to all three.<div class="msg-time">08:04</div>',
+    chatTitle: "Eva", chatStatusText: "Available", chatDate: "Today",
+    chatUser: "Create an invoice for $4,500 to Hargreavess Ltd. for prototype design.<div class='msg-time'>09:14</div>",
+    chatAiReply: "<div class='ac'><div class='ac-title'>&#128203; New Invoice &mdash; please confirm</div><div class='ac-row'><span class='ac-label'>Company</span><span class='ac-value'>Hargreavess Ltd</span></div><div class='ac-row'><span class='ac-label'>Description</span><span class='ac-value'>Prototype design</span></div><div class='ac-row'><span class='ac-label'>Amount</span><span class='ac-value'>$4,500.00</span></div><div class='ac-row'><span class='ac-label'>Due Date</span><span class='ac-value'>14 May 2026</span></div><div class='ac-divider'></div><div class='ac-actions'><button class='ac-btn confirm'>Confirm</button><button class='ac-btn cancel'>Cancel</button></div></div><div class='msg-time'>09:14</div>",
+    chatUser2: "Confirm<div class='msg-time'>09:15</div>",
+    chatAiBrief: "<a class='invoice-link'>INV0032</a> has been created.<div class='msg-time'>09:15</div>",
     howLabel: "The Process",
-    howH2: 'Your accounts, in your pocket — <em>always one message away</em>',
-    howIntro: "No Xero portal to open. No desktop required. Your finance assistant is available all day inside the Microsoft Teams you already use.",
+    howH2: "From message to Xero action — <em>in seconds</em>",
+    howIntro: "No Xero portal to open. No forms to fill in. Ask a question, raise an invoice, or log an expense — just type in Teams and the assistant handles it.",
     steps: [
-      { t: "Open Teams", d: "The assistant lives inside Microsoft Teams as a bot. No new software, no separate login — just open the chat and start typing." },
-      { t: "Type Your Request", d: "Write naturally — \"Invoice Hargreaves Ltd £2,400, 30-day terms\", \"What's my cash position?\", or \"Log an £85 lunch expense.\" No special syntax needed." },
-      { t: "AI Understands", d: "The assistant interprets your intent and calls the Xero API securely in the background — detecting language, entities, and action automatically." },
-      { t: "Action or Report", d: "It either executes the action — invoice raised, expense logged, reminder sent — or delivers the financial data you asked for, with your confirmation when needed." },
-      { t: "Confirms ✓", d: "You receive a clear confirmation with invoice numbers, amounts, or report data — all without leaving Microsoft Teams." }
+      { t: "Open Teams", d: "The assistant runs inside Microsoft Teams as a bot. No new software, no separate login — open the chat and start typing." },
+      { t: "Describe the Task", d: "Type what you need: an invoice for a client, or an expense to record. Use plain language — no special format or commands required." },
+      { t: "AI Understands", d: "The assistant extracts the details — client, amount, date, account code — and prepares the Xero record, ready for your review." },
+      { t: "You Confirm", d: "The assistant shows you a summary of what it will create. You approve with a single reply — or ask it to adjust any detail first." },
+      { t: "Saved in Xero ✓", d: "The invoice or expense is created directly in your Xero organisation via the API. You get a confirmation with the Xero reference number." }
     ],
     casesLabel: "What It Does",
-    casesH2: 'Your accounting command centre, <em>right inside Teams.</em>',
-    casesIntro: "From raising invoices to chasing overdue payments and pulling real-time financial snapshots — the assistant gives finance teams and business owners immediate access to their Xero data through simple conversation.",
+    casesH2: "Built on Xero. <em>Used from Teams.</em>",
+    casesIntro: "The assistant can query your Xero data and take actions on your behalf. Right now it focuses on invoice creation and expense logging — the two tasks that interrupt most working days. More Xero capabilities are on the way.",
     bpLabel: "Sample Interactions",
+    bpLabel2: "Sample Interactions",
     cases: [
       {
-        cat: "Invoicing & Receivables", title: "Raise Invoices and Chase Payments by Chat",
-        bullets: ["Raise a sales invoice with a single message — contact, amount, line items, and due date","Check the payment status of any invoice by client name or invoice number in Xero","View all overdue receivables ranked by age and amount, instantly","Send payment reminder emails to one or multiple contacts in one request","Query revenue by contact, date range, or account code"]
+        cat: "Invoice Creation", title: "Raise a Xero Invoice by Chat",
+        bullets: [
+          "Create a sales invoice by typing the contact name, amount, and due date — the assistant fills in the rest",
+          "Specify line items, quantities, and account codes conversationally in a follow-up message",
+          "Choose Draft or Approved status — both are supported via the Xero Invoices API",
+          "Send the invoice to your Xero contact's email directly from the Teams chat",
+          "Look up any existing invoice in Xero by contact name or invoice number"
+        ]
       },
       {
-        cat: "Expenses & Financial Reporting", title: "Log Expenses and Pull Reports Instantly",
-        bullets: ["Log an expense in seconds: \"£85 client lunch, charge to Blackwood project\"","Pull a real-time cash position, P&L summary, or balance sheet on demand from Xero","View upcoming bills and flag any due today or this week","Query transactions by date, amount, supplier, or account code","Generate a VAT return summary or period report with a single request"]
+        cat: "Expense Logging", title: "Record an Expense in Xero by Chat",
+        bullets: [
+          "Log a spend money transaction by describing what you bought — amount, supplier, and date",
+          "Assign to a Xero account code and tracking category in the same message",
+          "The expense is saved to Xero as an unreconciled bank transaction via the Bank Transactions API",
+          "Review the summary before it is saved — adjust any field with a follow-up message",
+          "Query your logged expenses for any date range by simply asking"
+        ]
       }
     ],
+    bpLines: [
+      '"Invoice Hargreavess Ltd $2,400, 30 days" &rarr; <span class="bl-val">INV-0087 created in Xero</span>',
+      '"Add line: 8hrs consulting at $300" &rarr; <span class="bl-val">Line item added</span>',
+      '"Send it to the contact" &rarr; <span class="bl-val">Sent to accounts@hargreavess.com</span>',
+      '"Show my draft invoices" &rarr; <span class="bl-val">3 drafts found in Xero</span>'
+    ],
+    bpLines2: [
+      '"Log $85 client lunch, charge to marketing" &rarr; <span class="bl-val">EXP-0021 saved in Xero</span>',
+      '"Supplier: Premier Inn, $240 hotel stay" &rarr; <span class="bl-val">EXP-0022 created</span>',
+      '"Assign to project Alpha" &rarr; <span class="bl-val">Tracking category updated</span>',
+      '"What did I expense this week?" &rarr; <span class="bl-val">3 expenses, total $397.50</span>'
+    ],
     alsoLabel: "Also available through the same assistant",
-    alsoChips: ["Purchase orders","Bank reconciliation","VAT returns","Supplier payments","Budget vs actual","Account tracking","Customer statements","Credit notes","Project billing","+ more on request"],
+    alsoChips: ["Check invoice status", "View overdue receivables", "Look up contact balances", "Record supplier bills", "Query recent transactions", "Check account balances", "+ more on request"],
     intLabel: "Integrations",
-    intH2: 'Works with <em>Xero</em> via <em>Microsoft Teams</em>',
+    intH2: "Works with <em>Xero</em> via <em>Microsoft Teams</em>",
     intIntro: "The MoravaSoft Finance Assistant connects securely to your existing Xero organisation — no new software, no data migration. Your team keeps working in Microsoft Teams like they always do.",
-    intNote: "Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · Read/write scoped to invoices, expenses, and reports only · Works on any device with Teams",
+    intNote: "Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · API access scoped to invoices and bank transactions only · Works on any device with Teams",
     aboutLabel: "About Us",
-    aboutH2: 'Small team. <em>Big impact.</em>',
-    aboutP1: "MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams access their Xero data through the tools they already use every day.",
-    aboutP2: "Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We embed your finance assistant directly there — so raising an invoice or checking your cash position takes one message, not five minutes of Xero navigation.",
-    aboutP3: "We work closely with each client to understand their accounting workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.",
-    aboutLocation: "📍 Morava, Czech Republic · Founded 2026",
-    ctaH2: "Ready to run your accounting from Teams?",
-    ctaP: "Book a live demo and we'll show you the assistant raising invoices, pulling receivables reports, and logging expenses — live from a real Xero organisation.",
+    aboutH2: "Small team. <em>Big impact.</em>",
+    aboutP1: "MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams get things done in Xero through the tools they already use every day.",
+    aboutP2: "Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We put your Xero assistant right there — so raising an invoice or logging an expense takes one message, not a trip to the portal.",
+    aboutP3: "We work closely with each client to understand their workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.",
+    aboutLocation: "Morava, Czech Republic · Founded 2026",
+    ctaH2: "Ready to put Xero inside Teams?",
+    ctaP: "Book a live demo and we will show you the assistant answering Xero queries, creating a real invoice, and logging an expense — all from a Teams chat, written directly into a live Xero organisation.",
     ctaBtn: "Request a Free Demo",
     contactLabel: "Contact", contactH3: "Let's set up your demo",
-    contactP: "Tell us a bit about your setup — your Xero subscription, company size, and the accounting tasks you most want to automate. We'll tailor the demo to your situation and respond within one business day.",
+    contactP: "Tell us about your Xero setup — your company size and how your team currently handles invoicing and expenses. We'll tailor the demo to your situation and respond within one business day.",
     contactHours: "Mon–Fri, CET business hours",
     fFirst: "First Name", fLast: "Last Name", fEmail: "Work Email", fCompany: "Company / Organisation",
     fSystem: "Company Size", fSystemDef: "Number of employees",
-    fMsg: "Tell us about your accounting setup", fMsgPh: "e.g. We use Xero for invoicing and expense management, team of 15. We want to raise invoices and check receivables without leaving Teams…",
-    fBtn: "Send Message →", fNote: "We'll respond within 1 business day. No spam, ever.",
-    fSuccess: "✓ Thank you! We've received your message and will be in touch shortly.",
+    fMsg: "Tell us about your setup",
+    fMsgPh: "e.g. We use Xero and Microsoft Teams. Our team raises around 50 invoices a month and I want to be able to do it without opening Xero each time...",
+    fBtn: "Send Message", fNote: "We'll respond within 1 business day. No spam, ever.",
+    fSuccess: "Thank you! We've received your message and will be in touch shortly.",
     modalTitle: "Message sent!",
-    modalMsg: "Thanks for reaching out — we've received your message and will get back to you <strong>within one business day.</strong> We look forward to showing you what the assistant can do for your finance team. 🧾",
+    modalMsg: "Thanks for reaching out — we've received your message and will get back to you <strong>within one business day.</strong> We look forward to showing you what the assistant can do for your team.",
     modalClose: "Close",
     footerCopy: "2026 MoravaSoft · Morava, Czech Republic",
     flHome: "Home", flHow: "How It Works", flAbout: "About", flContact: "Contact",
     aoLabel: "Your Always-On Finance Assistant",
-    aoH2: 'One AI. Replaces a dozen <em>separate conversations.</em>',
-    aoP1: "Before, a simple accounting task meant logging into Xero, navigating menus, finding the right screen — or calling your accountant and waiting for a callback. Checking receivables, raising an invoice, logging an expense — each task interrupted your day.",
-    aoP2: "With MoravaSoft, it all lives in one chat. Your AI assistant is permanently connected to Xero and always reachable inside Teams. No portal. No waiting. No context switching.",
+    aoH2: "One chat. Your entire Xero. <em>Always within reach.</em>",
+    aoP1: "Before, any Xero task meant stopping what you were doing, opening a browser, logging in, and navigating to the right screen. Whether you wanted to check an invoice, log an expense, or answer a quick financial question — each one pulled you away from your work.",
+    aoP2: "With MoravaSoft, your Xero is always one message away. The assistant is permanently connected to your Xero organisation via a secure API. Ask it a question or give it an action to carry out — it responds in seconds, without you ever leaving Teams.",
     aoPillars: [
-      { t: "Available whenever you need it", d: "Whether it's a Friday afternoon or a Sunday evening — the assistant is always ready. No office hours, no waiting for your accountant to be free." },
-      { t: "Live connection to Xero", d: "No copying data between systems. The assistant reads and writes directly to Xero via a secure OAuth 2.0 connection — invoices, expenses, reports, and account entries, instantly." },
-      { t: "Natural language, any language", d: "Ask in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically and responds accordingly. No commands to memorise." },
-      { t: "Works wherever Teams works", d: "On your laptop, phone, or tablet — the assistant travels with you. Full accounting access from any device, any location, through the Teams app you already have." }
-    ],
-    bpLines: [
-      '"Invoice Hargreaves Ltd £2,400, 30-day terms" → <span class="bl-val">INV-0084 raised in Xero.</span>',
-      '"Who owes me the most?" → <span class="bl-val">Singh &amp; Partners, £6,800</span>',
-      '"Send reminders to overdue contacts" → <span class="bl-val">3 reminders sent.</span>',
-      '"Revenue this month vs last" → <span class="bl-val">£38,400 vs £31,200 (+23%)</span>'
+      { t: "Available whenever you need it", d: "On-site with a client, travelling, or working late — the assistant is always ready. Raise an invoice or log an expense the moment it happens, not when you're back at your desk." },
+      { t: "Writes directly to Xero", d: "Every invoice and expense is created via the Xero API in real time. The record appears in your Xero organisation immediately — no sync, no import, no delay." },
+      { t: "Natural language, any language", d: "Type in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically. No commands to learn, no rigid format to follow." },
+      { t: "Always confirms before saving", d: "The assistant shows you what it will create and waits for your approval. You stay in control — nothing is written to Xero without your explicit confirmation." }
     ],
     intSubXero: "Xero · Cloud Accounting & Finance",
     intSubM365: "Azure AD · Your existing tenant",
     intSubTeams: "Microsoft · Your daily workspace",
-    statLabels: ["Your finance assistant is always on, always ready","New apps to install — runs in the Microsoft Teams you already have","Real-time data read and written directly in Xero","Average response time for invoice creation and financial queries"],
+    statLabels: [
+      "Raise invoices and log expenses any time, from anywhere",
+      "New apps to install — runs in the Microsoft Teams you already have",
+      "Records written directly to Xero via the API in real time",
+      "From message to confirmed Xero record"
+    ],
     contactAddress: "Morava, Czech Republic",
     fCompanyPh: "Your Company Name",
-    fOpts: ["1 – 10 employees","11 – 50 employees","51 – 200 employees","200+ employees"]
+    fOpts: ["1 – 10 employees", "11 – 50 employees", "51 – 200 employees", "200+ employees"]
   },
   cs: {
     navHow: "Jak to funguje", navCases: "Co umí", navAbout: "O nás", navDemo: "Požádat o demo",
     heroEyebrow: "AI finanční asistent · Microsoft Teams + Xero",
-    heroH1: 'Vaše účetnictví plně pod kontrolou — <em>přímo z Teams.</em>',
-    heroSub: "AI asistent MoravaSoft žije v Microsoft Teams a propojuje se přímo s Xero. Vystavujte faktury, kontrolujte pohledávky, evidujte výdaje — vše přirozenou konverzací ve vašem jazyce, odkudkoli jste.",
+    heroH1: "Váš Xero, vždy dostupný — <em>přímo z Teams.</em>",
+    heroSub: "AI asistent MoravaSoft propojuje Microsoft Teams přímo s Xero. Ptejte se, vystavujte faktury, evidujte výdaje — vše přirozenou konverzací, bez otevírání prohlížeče.",
     heroCta1: "Požádat o demo", heroCta2: "Jak to funguje",
-    chatTitle: "Eva", chatStatusText: "● Dostupný", chatDate: "Dnes",
-    chatAiBrief: '☀️ <strong>Dobré ráno!</strong> Váš přehled Xero:<br><br><span class="msg-stat">🧾 3 po splatnosti</span><span class="msg-stat">💰 348 000 Kč nezaplaceno</span><br><span class="msg-stat" style="background:rgba(200,169,110,0.12);border-color:rgba(200,169,110,0.3);color:#c8a96e;">⚠️ 2 závazky splatné dnes</span><span class="msg-stat">📥 5 nových transakcí</span><div class="msg-time">08:01</div>',
-    chatUser: 'Ukaž mi všechny pohledávky po splatnosti.<div class="msg-time">08:03</div>',
-    chatAiReply: '3 faktury po splatnosti v Xero:<br>• <strong>Hargreaves Ltd</strong> — 102 000 Kč (32 dní)<br>• <strong>Singh &amp; Partners</strong> — 165 600 Kč (18 dní)<br>• <strong>Blackwood Group</strong> — 78 000 Kč (7 dní)<br><br>Odeslat upomínky všem třem?<div class="msg-time">08:03</div>',
-    chatUser2: 'Ano, odešli upomínky všem třem.<div class="msg-time">08:04</div>',
+    chatTitle: "Eva", chatStatusText: "Dostupný", chatDate: "Dnes",
+    chatUser: "Vytvořte fakturu na 105 000 Kč pro Hargreavess Ltd. za návrh prototypu.<div class='msg-time'>09:14</div>",
+    chatAiReply: "<div class='ac'><div class='ac-title'>&#128203; Nová faktura &mdash; potvrďte prosím</div><div class='ac-row'><span class='ac-label'>Firma</span><span class='ac-value'>Hargreavess Ltd</span></div><div class='ac-row'><span class='ac-label'>Popis</span><span class='ac-value'>Návrh prototypu</span></div><div class='ac-row'><span class='ac-label'>Částka</span><span class='ac-value'>105 000 Kč</span></div><div class='ac-row'><span class='ac-label'>Splatnost</span><span class='ac-value'>14. 5. 2026</span></div><div class='ac-divider'></div><div class='ac-actions'><button class='ac-btn confirm'>Potvrdit</button><button class='ac-btn cancel'>Zrušit</button></div></div><div class='msg-time'>09:14</div>",
+    chatUser2: "Potvrdit<div class='msg-time'>09:15</div>",
+    chatAiBrief: "<a class='invoice-link'>FAK0032</a> byla vytvořena.<div class='msg-time'>09:15</div>",
     howLabel: "Proces",
-    howH2: 'Vaše účetnictví v kapse — <em>vždy jen zprávu daleko</em>',
-    howIntro: "Žádný portál Xero k otevírání. Žádný desktop. Váš finanční asistent je dostupný celý den uvnitř Microsoft Teams, které již používáte.",
+    howH2: "Od zprávy k akci v Xero — <em>během vteřin</em>",
+    howIntro: "Žádný portál Xero k otevírání. Žádné formuláře. Zeptejte se, vystavte fakturu nebo zaznamenejte výdaj — napište v Teams a asistent se postará o zbytek.",
     steps: [
-      { t: "Otevřete Teams", d: "Asistent žije v Microsoft Teams jako bot. Žádný nový software, žádné přihlašování — stačí otevřít chat a začít psát." },
-      { t: "Napište požadavek", d: "Pište přirozeně — \u201EFaktura Hargreaves Ltd 58 000 Kč, splatnost 30 dní\u201D, \u201EJaká je moje cash position?\u201D, nebo \u201EEviduj výdaj 2 000 Kč na oběd s klientem.\u201D Žádná speciální syntaxe." },
-      { t: "AI porozumí", d: "Asistent interpretuje váš záměr a zabezpečeně volá Xero API na pozadí — automaticky rozpoznává jazyk, entity a požadovanou akci." },
-      { t: "Akce nebo report", d: "Buď provede akci — faktura vystavena, výdaj evidován, upomínka odeslána — nebo doručí finanční data, o která jste požádali, případně s vaším potvrzením." },
-      { t: "Potvrdí ✓", d: "Obdržíte jasné potvrzení s čísly faktur, částkami nebo daty reportu — vše bez opuštění Microsoft Teams." }
+      { t: "Otevřete Teams", d: "Asistent běží v Microsoft Teams jako bot. Žádný nový software, žádné přihlašování — otevřete chat a začněte psát." },
+      { t: "Popište úkol", d: "Napište, co potřebujete: fakturu pro klienta nebo výdaj k zaznamenání. Pište přirozeně — žádný speciální formát ani příkazy nejsou potřeba." },
+      { t: "AI porozumí", d: "Asistent vytáhne detaily — klient, částka, datum, kód účtu — a připraví záznam do Xero pro vaši kontrolu." },
+      { t: "Vy potvrdíte", d: "Asistent vám ukáže přehled toho, co vytvoří. Schválíte jedinou odpovědí — nebo ho požádáte nejprve upravit libovolný detail." },
+      { t: "Uloženo v Xero ✓", d: "Faktura nebo výdaj jsou vytvořeny přímo ve vaší organizaci Xero přes API. Obdržíte potvrzení s referenčním číslem Xero." }
     ],
     casesLabel: "Co umí",
-    casesH2: 'Vaše účetní velitelské centrum, <em>přímo v Teams.</em>',
-    casesIntro: "Od vystavování faktur po pohledávky po splatnosti a přehledy v reálném čase — asistent dává finančním týmům a majitelům firem okamžitý přístup k datům Xero přes jednoduchou konverzaci.",
+    casesH2: "Postaveno na Xero. <em>Ovládané z Teams.</em>",
+    casesIntro: "Asistent dokáže dotazovat vaše data v Xero i provádět akce. Nyní se zaměřuje na vytváření faktur a evidenci výdajů — dva úkoly, které nejvíce přerušují pracovní den. Další funkce Xero jsou na cestě.",
     bpLabel: "Ukázkové interakce",
+    bpLabel2: "Ukázkové interakce",
     cases: [
       {
-        cat: "Fakturace a pohledávky", title: "Vystavujte faktury a vymáhejte platby chatem",
-        bullets: ["Vystavte fakturu jednou zprávou — zákazník, částka, položky a splatnost","Zkontrolujte stav platby jakékoli faktury v Xero podle jména klienta nebo čísla faktury","Zobrazte všechny pohledávky po splatnosti seřazené podle stáří a výše okamžitě","Odešlete upomínky k platbě jednomu nebo více kontaktům v jednom požadavku","Dotaz na příjmy podle kontaktu, období nebo kódu účtu"]
+        cat: "Vytváření faktur", title: "Vystavte fakturu v Xero chatem",
+        bullets: [
+          "Vytvořte fakturu napsáním jména kontaktu, částky a splatnosti — asistent doplní zbytek",
+          "Upřesněte položky, množství a kódy účtů v navazující zprávě",
+          "Vyberte stav Koncept nebo Schváleno — obě možnosti jsou podporovány přes Xero Invoices API",
+          "Odešlete fakturu e-mailem kontaktu v Xero přímo z chatu v Teams",
+          "Vyhledejte jakoukoli existující fakturu v Xero podle jména kontaktu nebo čísla faktury"
+        ]
       },
       {
-        cat: "Výdaje a finanční reporting", title: "Evidujte výdaje a získávejte reporty okamžitě",
-        bullets: ["Evidujte výdaj během vteřin: napište např. \u201E2 000 Kč oběd s klientem, projekt Blackwood\u201D","Získejte aktuální přehled cash position, výsledovky nebo rozvahy z Xero na požádání","Zobrazte nadcházející závazky a označte ty splatné dnes nebo tento týden","Dotaz na transakce podle data, částky, dodavatele nebo kódu účtu","Generujte přehled DPH nebo periodický report jedním požadavkem"]
+        cat: "Evidence výdajů", title: "Zaznamenejte výdaj v Xero chatem",
+        bullets: [
+          "Zaznamenejte transakci výdaje popsáním nákupu — částka, dodavatel a datum",
+          "Přiřaďte ke kódu účtu Xero a sledovací kategorii ve stejné zprávě",
+          "Výdaj je uložen do Xero jako neodsouhlasená bankovní transakce přes Bank Transactions API",
+          "Zkontrolujte přehled před uložením — upravte libovolné pole v navazující zprávě",
+          "Dotažte se na zaznamenané výdaje za libovolné období jednoduchou otázkou"
+        ]
       }
     ],
+    bpLines: [
+      '"Faktura Hargreavess Ltd 58 000 Kc, 30 dni" &rarr; <span class="bl-val">FAK-0087 vytvořena v Xero</span>',
+      '"Pridej polozku: 8 hod. konzultace, 7 250 Kc" &rarr; <span class="bl-val">Položka přidána</span>',
+      '"Odeslat kontaktu" &rarr; <span class="bl-val">Odesláno na accounts@hargreavess.com</span>',
+      '"Ukaž moje faktury v konceptu" &rarr; <span class="bl-val">Nalezeny 3 koncepty v Xero</span>'
+    ],
+    bpLines2: [
+      '"Obed s klientem 2 000 Kc, marketing" &rarr; <span class="bl-val">VYD-0021 uložen v Xero</span>',
+      '"Dodavatel: Premier Inn, hotel 5 800 Kc" &rarr; <span class="bl-val">VYD-0022 vytvořen</span>',
+      '"Priradit k projektu Alpha" &rarr; <span class="bl-val">Sledovací kategorie aktualizována</span>',
+      '"Co jsem evidoval tento tyden?" &rarr; <span class="bl-val">3 výdaje, celkem 9 650 Kč</span>'
+    ],
     alsoLabel: "Také dostupné přes stejného asistenta",
-    alsoChips: ["Objednávky","Bankovní odsouhlasení","Přiznání k DPH","Platby dodavatelům","Plán vs skutečnost","Sledování účtů","Výpisy zákazníků","Dobropisy","Projektová fakturace","+ další na vyžádání"],
+    alsoChips: ["Stav faktury", "Pohledávky po splatnosti", "Zůstatky kontaktů", "Evidence faktur dodavatelů", "Poslední transakce", "Zůstatky účtů", "+ další na vyžádání"],
     intLabel: "Integrace",
-    intH2: 'Funguje s <em>Xero</em> přes <em>Microsoft Teams</em>',
+    intH2: "Funguje s <em>Xero</em> přes <em>Microsoft Teams</em>",
     intIntro: "Asistent MoravaSoft se zabezpečeně propojí s vaší stávající organizací Xero — žádný nový software, žádná migrace dat. Váš tým pokračuje v práci v Microsoft Teams jako vždy.",
-    intNote: "Zabezpečené Xero API · OAuth 2.0 autentizace · MoravaSoft neukládá finanční data · Přístup omezen na faktury, výdaje a reporty · Funguje na každém zařízení s Teams",
+    intNote: "Zabezpečené Xero API · OAuth 2.0 autentizace · MoravaSoft neukládá finanční data · Přístup API omezen na faktury a bankovní transakce · Funguje na každém zařízení s Teams",
     aboutLabel: "O nás",
-    aboutH2: 'Malý tým. <em>Velký dopad.</em>',
-    aboutP1: "MoravaSoft je softwarová firma specializující se na AI automatizaci finančních a účetních operací. Vytváříme asistenty, kteří umožňují majitelům firem a finančním týmům přistupovat k datům Xero přes nástroje, které každodenně používají.",
-    aboutP2: "Náš přístup je jednoduchý: nejlepší nástroj je ten, který máte právě otevřený na obrazovce. Microsoft Teams je místo, kde vaše organizace komunikuje. Přímo tam vložíme vašeho finančního asistenta — takže vystavit fakturu nebo zkontrolovat cash position trvá jednu zprávu, ne pět minut navigace v Xero.",
-    aboutP3: "Úzce spolupracujeme s každým klientem, abychom porozuměli jeho účetním procesům, nakonfigurovali asistenta podle nastavení Xero a dodali něco, co tým skutečně chce používat — od prvního dne.",
-    aboutLocation: "📍 Morava, Česká republika · Založeno 2026",
-    ctaH2: "Připraveni ovládat účetnictví z Teams?",
-    ctaP: "Zarezervujte live demo a ukážeme vám asistenta při vystavování faktur, generování přehledů pohledávek a evidenci výdajů — přímo v reálné organizaci Xero.",
+    aboutH2: "Malý tým. <em>Velký dopad.</em>",
+    aboutP1: "MoravaSoft je softwarová firma specializující se na AI automatizaci finančních a účetních operací. Vytváříme asistenty, kteří umožňují majitelům firem a finančním týmům pracovat v Xero přes nástroje, které každodenně používají.",
+    aboutP2: "Náš přístup je jednoduchý: nejlepší nástroj je ten, který máte právě otevřený na obrazovce. Microsoft Teams je místo, kde vaše organizace komunikuje. Přímo tam vložíme vašeho asistenta pro Xero — takže vystavit fakturu nebo zaznamenat výdaj trvá jednu zprávu, ne cestu do portálu.",
+    aboutP3: "Úzce spolupracujeme s každým klientem, abychom porozuměli jeho pracovním postupům, nakonfigurovali asistenta podle jejich nastavení Xero a dodali něco, co tým skutečně chce používat — od prvního dne.",
+    aboutLocation: "Morava, Česká republika · Založeno 2026",
+    ctaH2: "Připraveni mít Xero v Teams?",
+    ctaP: "Zarezervujte live demo a ukážeme vám asistenta při zodpovídání dotazů na Xero, vytváření skutečné faktury a záznamu výdaje — vše z chatu v Teams, přímo v živé organizaci Xero.",
     ctaBtn: "Požádat o bezplatné demo",
     contactLabel: "Kontakt", contactH3: "Domluvme si demo",
-    contactP: "Řekněte nám něco o vašem nastavení — vaše předplatné Xero, velikost firmy a účetní úkoly, které chcete nejvíce automatizovat. Demo přizpůsobíme vaší situaci a odpovíme do jednoho pracovního dne.",
+    contactP: "Řekněte nám o svém nastavení Xero — velikost firmy a jak váš tým aktuálně řeší fakturaci a výdaje. Demo přizpůsobíme vaší situaci a odpovíme do jednoho pracovního dne.",
     contactHours: "Po–Pá, pracovní hodiny SEČ",
     fFirst: "Jméno", fLast: "Příjmení", fEmail: "Pracovní e-mail", fCompany: "Firma / Organizace",
     fSystem: "Velikost firmy", fSystemDef: "Počet zaměstnanců",
-    fMsg: "Popište vaše účetní nastavení", fMsgPh: "např. Používáme Xero pro fakturaci a evidenci výdajů, tým 15 lidí. Chceme vystavovat faktury a kontrolovat pohledávky bez opuštění Teams…",
-    fBtn: "Odeslat zprávu →", fNote: "Odpovíme do 1 pracovního dne. Žádný spam.",
-    fSuccess: "✓ Děkujeme! Vaši zprávu jsme obdrželi a brzy se ozveme.",
+    fMsg: "Popište vaše nastavení",
+    fMsgPh: "např. Používáme Xero a Microsoft Teams. Tým vystavuje asi 50 faktur mesicne a chci to delat bez otevirani Xero...",
+    fBtn: "Odeslat zprávu", fNote: "Odpovíme do 1 pracovního dne. Žádný spam.",
+    fSuccess: "Dekujeme! Vasi zprávu jsme obdrželi a brzy se ozveme.",
     modalTitle: "Zpráva odeslána!",
-    modalMsg: "Děkujeme za váš zájem — vaši zprávu jsme obdrželi a ozveme se vám <strong>do jednoho pracovního dne.</strong> Těšíme se, že vám ukážeme, co náš asistent dokáže pro váš finanční tým. 🧾",
+    modalMsg: "Dekujeme za váš zájem — vaši zprávu jsme obdrželi a ozveme se vám <strong>do jednoho pracovního dne.</strong> Těšíme se, že vám ukážeme, co náš asistent dokáže.",
     modalClose: "Zavřít",
     footerCopy: "2026 MoravaSoft · Morava, Česká republika",
     flHome: "Domů", flHow: "Jak to funguje", flAbout: "O nás", flContact: "Kontakt",
     aoLabel: "Váš stálý finanční asistent",
-    aoH2: 'Jeden AI. Nahrazuje desítky <em>oddělených konverzací.</em>',
-    aoP1: "Dříve znamenal i jednoduchý účetní úkol přihlášení do Xero, navigaci v menu a hledání správné obrazovky — nebo telefonát účetní/mu a čekání na zpětné volání. Kontrola pohledávek, vystavení faktury, evidence výdaje — každý úkol přerušoval váš den.",
-    aoP2: "S MoravaSoft je vše v jednom chatu. Váš AI asistent je trvale připojen k Xero a vždy dostupný uvnitř Teams. Žádný portál. Žádné čekání. Žádné přepínání kontextu.",
+    aoH2: "Jeden chat. Celý váš Xero. <em>Vždy dosažitelný.</em>",
+    aoP1: "Dříve každý úkol v Xero znamenal přerušit práci, otevřít prohlížeč, přihlásit se a přejít na správnou obrazovku. Ať jste chtěli zkontrolovat fakturu, zaznamenat výdaj nebo odpovědět na rychlý finanční dotaz — vždy vás to odvedlo od práce.",
+    aoP2: "S MoravaSoft je váš Xero vždy jen jednu zprávu daleko. Asistent je trvale připojen k vaší organizaci Xero přes zabezpečené API. Položte otázku nebo zadejte akci — reaguje během vteřin, aniž byste opustili Teams.",
     aoPillars: [
-      { t: "Dostupný vždy, když ho potřebujete", d: "Ať je páteční odpoledne nebo nedělní večer — asistent je vždy připraven. Žádná pracovní doba, žádné čekání, až bude účetní volný." },
-      { t: "Živé propojení s Xero", d: "Žádné kopírování dat mezi systémy. Asistent čte a zapisuje přímo do Xero přes zabezpečené OAuth 2.0 připojení — faktury, výdaje, reporty a účetní záznamy okamžitě." },
-      { t: "Přirozený jazyk, jakýkoli jazyk", d: "Pište česky, anglicky, nizozemsky — nebo přepínejte uprostřed konverzace. Asistent automaticky rozpozná váš jazyk a odpoví v něm. Žádné příkazy k zapamatování." },
-      { t: "Funguje všude, kde funguje Teams", d: "Na laptopu, telefonu nebo tabletu — asistent je vždy s vámi. Plný přístup k účetnictví z jakéhokoli zařízení, kdykoli, přes Teams, které již máte." }
-    ],
-    bpLines: [
-      '"Faktura Hargreaves Ltd 58 000 Kč, 30 dní" → <span class="bl-val">FAK-0084 vystavena v Xero.</span>',
-      '"Kdo mi dluží nejvíce?" → <span class="bl-val">Singh &amp; Partners, 165 600 Kč</span>',
-      '"Odešli upomínky dlužníkům" → <span class="bl-val">3 upomínky odeslány.</span>',
-      '"Příjmy tento vs minulý měsíc" → <span class="bl-val">938 400 Kč vs 763 200 Kč (+23%)</span>'
+      { t: "Dostupný vždy, když ho potřebujete", d: "Na místě u klienta, na cestách nebo do pozdě večer — asistent je vždy připraven. Vystavte fakturu nebo zaznamenejte výdaj ve chvíli, kdy k tomu dojde." },
+      { t: "Zapisuje přímo do Xero", d: "Každá faktura a každý výdaj jsou vytvořeny přes Xero API v reálném čase. Záznam se okamžitě objeví ve vaší organizaci Xero — žádná synchronizace, žádný import." },
+      { t: "Přirozený jazyk, jakýkoli jazyk", d: "Pište česky, anglicky nebo nizozemsky — nebo přepínejte uprostřed konverzace. Asistent automaticky rozpozná váš jazyk. Žádné příkazy k učení." },
+      { t: "Vždy potvrzuje před uložením", d: "Asistent vám ukáže, co vytvoří, a čeká na vaše schválení. Zůstáváte v kontrole — do Xero se nezapíše nic bez vašeho výslovného souhlasu." }
     ],
     intSubXero: "Xero · Cloud účetnictví a finance",
     intSubM365: "Azure AD · Váš stávající tenant",
     intSubTeams: "Microsoft · Vaše každodenní prostředí",
-    statLabels: ["Váš finanční asistent je neustále k dispozici a připraven pomoci","Žádné nové aplikace — funguje v Microsoft Teams, který již máte","Data v reálném čase čtená a zapisovaná přímo v Xero","Průměrná doba odpovědi při vytváření faktur a finančních dotazech"],
+    statLabels: [
+      "Vystavujte faktury a evidujte výdaje kdykoli, odkudkoli",
+      "Žádné nové aplikace — běží v Microsoft Teams, který již máte",
+      "Záznamy zapsané přímo do Xero přes API v reálném čase",
+      "Od zprávy k potvrzeného záznamu v Xero"
+    ],
     contactAddress: "Morava, Česká republika",
     fCompanyPh: "Název vaší firmy",
-    fOpts: ["1 – 10 zaměstnanců","11 – 50 zaměstnanců","51 – 200 zaměstnanců","200+ zaměstnanců"]
+    fOpts: ["1 – 10 zaměstnanců", "11 – 50 zaměstnanců", "51 – 200 zaměstnanců", "200+ zaměstnanců"]
   }
 };
 
 function setLang(l) {
-  const t = T[l];
+  var t = T[l];
   document.documentElement.lang = l;
-  const s  = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
-  const st = (id, txt)  => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+  function s(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
+  function st(id, txt) { var e = document.getElementById(id); if (e) e.textContent = txt; }
 
   st('nav-how', t.navHow); st('nav-cases', t.navCases); st('nav-about', t.navAbout); st('nav-demo', t.navDemo);
-  st('hero-eyebrow', t.heroEyebrow); s('hero-h1', t.heroH1); st('hero-sub', t.heroSub);
+  s('hero-h1', t.heroH1); st('hero-eyebrow', t.heroEyebrow); st('hero-sub', t.heroSub);
   st('hero-cta1', t.heroCta1); st('hero-cta2', t.heroCta2);
   st('chat-title', t.chatTitle); st('chat-status-text', t.chatStatusText); st('chat-date', t.chatDate);
-  s('chat-ai-brief', t.chatAiBrief); s('chat-user', t.chatUser); s('chat-ai-reply', t.chatAiReply); s('chat-user2', t.chatUser2);
+  s('chat-user', t.chatUser); s('chat-ai-reply', t.chatAiReply); s('chat-user2', t.chatUser2); s('chat-ai-brief', t.chatAiBrief);
   st('how-label', t.howLabel); s('how-h2', t.howH2); st('how-intro', t.howIntro);
-  t.steps.forEach((x, i) => { st('step-t' + i, x.t); st('step-d' + i, x.d); });
+  t.steps.forEach(function(x, i) { st('step-t' + i, x.t); st('step-d' + i, x.d); });
   st('ao-label', t.aoLabel); s('ao-h2', t.aoH2); st('ao-p1', t.aoP1); st('ao-p2', t.aoP2);
-  if (t.aoPillars) t.aoPillars.forEach((x, i) => { st('ao-t' + (i+1), x.t); st('ao-d' + (i+1), x.d); });
-  if (t.bpLines) t.bpLines.forEach((html, i) => { s('bp-line' + (i+1), html); });
-  st('int-sub-xero', t.intSubXero); st('int-sub-m365', t.intSubM365); st('int-sub-teams', t.intSubTeams);
-  if (t.statLabels) t.statLabels.forEach((txt, i) => { st('stat-label' + i, txt); });
-  st('contact-address', t.contactAddress);
-  const fci = document.getElementById('f-company-input'); if (fci) fci.placeholder = t.fCompanyPh;
-  if (t.fOpts) { ['f-opt1','f-opt2','f-opt3','f-opt4'].forEach((id, i) => { st(id, t.fOpts[i]); }); }
+  if (t.aoPillars) t.aoPillars.forEach(function(x, i) { st('ao-t' + (i+1), x.t); st('ao-d' + (i+1), x.d); });
   st('cases-label', t.casesLabel); s('cases-h2', t.casesH2); st('cases-intro', t.casesIntro);
-  st('bp-label', t.bpLabel);
-  t.cases.forEach((x, i) => {
+  st('bp-label', t.bpLabel); st('bp-label2', t.bpLabel2);
+  if (t.bpLines) t.bpLines.forEach(function(html, i) { s('bp-line' + (i+1), html); });
+  if (t.bpLines2) t.bpLines2.forEach(function(html, i) { s('bp-line' + (i+5), html); });
+  t.cases.forEach(function(x, i) {
     st('case-cat' + i, x.cat); st('case-title' + i, x.title);
-    const ul = document.getElementById('case-bullets' + i);
-    if (ul) ul.innerHTML = x.bullets.map(b => '<li>' + b + '</li>').join('');
+    var ul = document.getElementById('case-bullets' + i);
+    if (ul) ul.innerHTML = x.bullets.map(function(b) { return '<li>' + b + '</li>'; }).join('');
   });
   st('also-label', t.alsoLabel);
-  const chips = document.getElementById('also-chips');
-  if (chips) chips.innerHTML = t.alsoChips.map(c => '<span>' + c + '</span>').join('');
+  var chips = document.getElementById('also-chips');
+  if (chips) chips.innerHTML = t.alsoChips.map(function(c) { return '<span>' + c + '</span>'; }).join('');
   st('int-label', t.intLabel); s('int-h2', t.intH2); st('int-intro', t.intIntro); st('int-note', t.intNote);
+  st('int-sub-xero', t.intSubXero); st('int-sub-m365', t.intSubM365); st('int-sub-teams', t.intSubTeams);
   st('about-label', t.aboutLabel); s('about-h2', t.aboutH2);
   st('about-p1', t.aboutP1); st('about-p2', t.aboutP2); st('about-p3', t.aboutP3);
-  st('about-location', t.aboutLocation);
+  st('about-location', '\uD83D\uDCCD ' + t.aboutLocation);
+  if (t.statLabels) t.statLabels.forEach(function(txt, i) { st('stat-label' + i, txt); });
   s('cta-h2', t.ctaH2); st('cta-p', t.ctaP); st('cta-btn', t.ctaBtn);
   st('contact-label', t.contactLabel); st('contact-h3', t.contactH3); st('contact-p', t.contactP);
-  st('contact-hours', t.contactHours);
+  st('contact-address', t.contactAddress); st('contact-hours', t.contactHours);
   st('f-first-lbl', t.fFirst + ' *'); st('f-last-lbl', t.fLast + ' *');
   st('f-email-lbl', t.fEmail + ' *'); st('f-company-lbl', t.fCompany);
   st('f-system-lbl', t.fSystem); st('f-system-def', t.fSystemDef);
   st('f-msg-lbl', t.fMsg + ' *');
-  const fmsg = document.getElementById('f-msg'); if (fmsg) fmsg.placeholder = t.fMsgPh;
-  st('f-submit', t.fBtn); st('f-note', t.fNote); st('f-success', t.fSuccess);
+  var fmsg = document.getElementById('f-msg'); if (fmsg) fmsg.placeholder = t.fMsgPh;
+  var fci = document.getElementById('f-company-input'); if (fci) fci.placeholder = t.fCompanyPh;
+  if (t.fOpts) { ['f-opt1','f-opt2','f-opt3','f-opt4'].forEach(function(id, i) { st(id, t.fOpts[i]); }); }
+  st('f-submit', t.fBtn); st('f-note', t.fNote);
   st('modal-title', t.modalTitle); s('modal-msg', t.modalMsg); st('modal-close-btn', t.modalClose);
   st('footer-copy', t.footerCopy);
   st('fl-home', t.flHome); st('fl-how', t.flHow); st('fl-about', t.flAbout); st('fl-contact', t.flContact);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === l); });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   setLang('en');
 
-  const logoImg = document.getElementById('nav-logo-img');
-  const evaAvatar = document.getElementById('eva-avatar-img');
+  var logoImg = document.getElementById('nav-logo-img');
+  var evaAvatar = document.getElementById('eva-avatar-img');
   if (logoImg && evaAvatar) evaAvatar.src = logoImg.src;
 
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
       if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+        setTimeout(function() { e.target.classList.add('visible'); }, e.target.dataset.delay || 0);
         obs.unobserve(e.target);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.fade-in').forEach((el, i) => {
+  document.querySelectorAll('.fade-in').forEach(function(el, i) {
     el.dataset.delay = (i % 6) * 80;
     obs.observe(el);
   });
 
-  const form = document.getElementById('contactForm');
-  const modal = document.getElementById('thankYouModal');
-  const btn = document.getElementById('f-submit');
+  var form = document.getElementById('contactForm');
+  var modal = document.getElementById('thankYouModal');
+  var btn = document.getElementById('f-submit');
 
   if (form) {
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const originalText = btn.textContent;
+      var originalText = btn.textContent;
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Sending…';
-      try {
-        const formData = new FormData(this);
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
+      btn.innerHTML = '<span class="spinner"></span> Sending\u2026';
+      var formData = new FormData(this);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      }).then(function(response) {
         if (response.ok) {
-          this.reset();
+          form.reset();
           if (modal) modal.classList.add('active');
         } else {
           throw new Error('Network response was not ok');
         }
-      } catch (err) {
-        alert('Something went wrong — please try emailing us directly at info@moravasoft.com');
+      }).catch(function(err) {
+        alert('Something went wrong — please email us at info@moravasoft.com');
         console.error(err);
-      } finally {
+      }).finally(function() {
         btn.disabled = false;
         btn.textContent = originalText;
-      }
+      });
     });
   }
 
@@ -941,12 +1014,4 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- THANK YOU MODAL -->
 <div class="modal-overlay" id="thankYouModal">
   <div class="modal-box">
-    <div class="modal-icon">✉️</div>
-    <div class="modal-title" id="modal-title">Message sent!</div>
-    <p class="modal-msg" id="modal-msg">Thanks for reaching out — we've received your message and will get back to you <strong>within one business day.</strong> We look forward to showing you what the assistant can do for your finance team. 🧾</p>
-    <button class="modal-close" id="modal-close-btn" onclick="document.getElementById('thankYouModal').classList.remove('active')">Close</button>
-  </div>
-</div>
-
-</body>
-</html>
+    <div class="modal-icon">&#x2709;
