@@ -609,7 +609,8 @@ footer { background: var(--dark2); border-top: 1px solid var(--border); padding:
         <div class="contact-detail"><span>🕐</span><span id="contact-hours">Mon–Fri, CET business hours</span></div>
       </div>
       <div>
-        <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form class="contact-form" id="contactForm" name="contact" action="https://formsubmit.co/info@moravasoft.com" method="POST">
+          <input type="hidden" name="_honey" style="display:none">
           <input type="hidden" name="form-name" value="contact">
           <p style="display:none"><input name="bot-field"></p>
           <div class="form-row">
@@ -680,7 +681,7 @@ var T = {
     chatUser: "Create an invoice for $4,500 to Hargreavess Ltd. for prototype design.<div class='msg-time'>09:14</div>",
     chatAiReply: "<div class='ac'><div class='ac-title'>&#128203; New Invoice &mdash; please confirm</div><div class='ac-row'><span class='ac-label'>Company</span><span class='ac-value'>Hargreavess Ltd</span></div><div class='ac-row'><span class='ac-label'>Description</span><span class='ac-value'>Prototype design</span></div><div class='ac-row'><span class='ac-label'>Amount</span><span class='ac-value'>$4,500.00</span></div><div class='ac-row'><span class='ac-label'>Due Date</span><span class='ac-value'>14 May 2026</span></div><div class='ac-divider'></div><div class='ac-actions'><button class='ac-btn confirm'>Confirm</button><button class='ac-btn cancel'>Cancel</button></div></div><div class='msg-time'>09:14</div>",
     chatUser2: "Confirm<div class='msg-time'>09:15</div>",
-    chatAiBrief: "<a class='invoice-link'>INV0032</a> has been created.<div class='msg-time'>09:15</div>",
+    chatAiBrief: "<a class='invoice-link'>INV-0032</a> has been created.<div class='msg-time'>09:15</div>",
     howLabel: "The Process",
     howH2: "From message to Xero action — <em>in seconds</em>",
     howIntro: "No Xero portal to open. No forms to fill in. Ask a question, raise an invoice, or log an expense — just type in Teams and the assistant handles it.",
