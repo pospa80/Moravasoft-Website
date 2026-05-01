@@ -1,1023 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MoravaSoft – AI Finance Assistant for Microsoft Teams & Xero</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --blue: #7bbde8;
-  --blue-dim: rgba(123,189,232,0.15);
-  --gold: #c8a96e;
-  --dark: #111827;
-  --dark2: #1a2330;
-  --dark3: #1f2d3d;
-  --dark4: #263548;
-  --text: #e8edf4;
-  --muted: #9aa6b2;
-  --border: rgba(123,189,232,0.15);
-  --border-gold: rgba(200,169,110,0.25);
-  --heading-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --body-font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--body-font); background: var(--dark); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoravaSoft – Custom Software Development</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #7bbde8;
+            --blue-dim: rgba(123, 189, 232, 0.15);
+            --gold: #c8a96e;
+            --dark: #111827;
+            --dark2: #1a2330;
+            --dark3: #1f2d3d;
+            --dark4: #263548;
+            --text: #e8edf4;
+            --muted: #9aa6b2;
+            --border: rgba(123, 189, 232, 0.15);
+            --border-gold: rgba(200, 169, 110, 0.25);
+            --heading-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --body-font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
 
-/* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 4rem; background: rgba(13,17,23,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-.nav-logo img { height: 64px; width: auto; display: block; }
-.nav-logo span { font-family: var(--heading-font); font-weight: 800; font-size: 1.15rem; color: var(--blue); letter-spacing: 0.01em; }
-.nav-right { display: flex; align-items: center; gap: 2rem; }
-.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-.nav-links a { font-size: 0.83rem; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover { color: var(--blue); }
-.lang-toggle { display: flex; align-items: center; background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; font-family: var(--heading-font); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; }
-.lang-btn { padding: 0.35rem 0.85rem; cursor: pointer; color: var(--muted); transition: background 0.2s, color 0.2s; user-select: none; }
-.lang-btn.active { background: var(--blue); color: var(--dark); }
-.nav-cta { font-family: var(--heading-font); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark) !important; background: var(--gold); padding: 0.5rem 1.25rem; border-radius: 3px; text-decoration: none; transition: opacity 0.2s; }
-.nav-cta:hover { opacity: 0.85; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* HERO */
-#hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 4rem 4rem; overflow: hidden; }
-.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(123,189,232,0.07) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,0.06) 0%, transparent 60%), var(--dark); }
-.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(123,189,232,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(123,189,232,0.05) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 30%, transparent 80%); animation: gridDrift 20s linear infinite; }
-@keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
-.hero-inner { position: relative; z-index: 1; width: 100%; max-width: 1100px; display: flex; align-items: center; gap: 5rem; }
-.hero-content { flex: 1; min-width: 0; max-width: 560px; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; animation: fadeUp 0.7s 0.2s ease both; }
-.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
-.hero-h1 { font-family: var(--heading-font); font-weight: 800; font-size: clamp(2.2rem, 4.5vw, 3.5rem); line-height: 1.12; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1.5rem; animation: fadeUp 0.7s 0.35s ease both; }
-.hero-h1 em { font-style: normal; color: var(--blue); }
-.hero-sub { font-size: 1.05rem; font-weight: 300; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; animation: fadeUp 0.7s 0.5s ease both; }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.7s 0.65s ease both; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        html {
+            scroll-behavior: smooth;
+        }
 
-/* Teams chat mockup */
-.hero-visual { position: relative; width: 340px; flex-shrink: 0; background: #f5f5f5; border: 1px solid rgba(123,189,232,0.2); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 30px rgba(123,189,232,0.08); animation: fadeFromRight 0.9s 0.9s ease both; }
-@keyframes fadeFromRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-.chat-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.1rem; background: #464775; }
-.chat-avatar-wrap { position: relative; flex-shrink: 0; }
-.chat-avatar { width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 3px; }
-.chat-avatar img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: 50%; }
-.chat-online-dot { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #7bbde8; border-radius: 50%; border: 2px solid #464775; }
-.chat-info { flex: 1; }
-.chat-title { font-size: 0.88rem; font-weight: 600; color: #fff; }
-.chat-status { font-size: 0.68rem; color: rgba(255,255,255,0.8); }
-.chat-header-icons { display: flex; gap: 0.75rem; color: rgba(255,255,255,0.8); font-size: 0.85rem; }
-.chat-body { padding: 0.75rem 0.9rem; display: flex; flex-direction: column; gap: 0.6rem; background: #f5f5f5; }
-.chat-date-divider { text-align: center; font-size: 0.65rem; color: #666; background: rgba(255,255,255,0.8); border-radius: 10px; padding: 0.2rem 0.7rem; align-self: center; margin: 0.2rem 0; }
-.msg { display: flex; flex-direction: column; gap: 0.15rem; }
-.msg-bubble { padding: 0.5rem 0.75rem 1.4rem; border-radius: 8px; font-size: 0.77rem; line-height: 1.5; max-width: 88%; position: relative; }
-.msg-time { position: absolute; bottom: 0.28rem; right: 0.55rem; font-size: 0.6rem; color: rgba(0,0,0,0.38); }
-.msg-user .msg-bubble { background: #e8effa; color: #111; align-self: flex-end; border-bottom-right-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.msg-ai .msg-bubble { background: #fff; color: #111; align-self: flex-start; border-bottom-left-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.msg-stat { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(123,189,232,0.18); border: 1px solid rgba(123,189,232,0.35); border-radius: 6px; padding: 0.2rem 0.5rem; font-size: 0.7rem; color: #1a6b9a; margin-top: 0.3rem; margin-right: 0.3rem; font-weight: 600; }
-.chat-typing { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem 0.75rem; background: #f5f5f5; }
-.typing-bubble { background: #fff; border-radius: 18px; padding: 0.45rem 0.75rem; display: flex; gap: 0.3rem; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.typing-dot { width: 5px; height: 5px; background: #8a96a8; border-radius: 50%; animation: bounce 1.2s infinite; }
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-4px); opacity: 1; } }
+        body {
+            font-family: var(--body-font);
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
 
-/* BUTTONS */
-.btn-primary { font-family: var(--heading-font); font-weight: 700; font-size: 0.83rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark); background: var(--blue); padding: 0.9rem 2rem; border-radius: 3px; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 30px rgba(123,189,232,0.3); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(123,189,232,0.4); }
-.btn-secondary { font-family: var(--heading-font); font-weight: 600; font-size: 0.83rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); background: transparent; padding: 0.9rem 2rem; border-radius: 3px; border: 1px solid var(--border); text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s; }
-.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 4rem;
+            background: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
 
-/* SECTIONS */
-section { position: relative; z-index: 1; }
-.section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; }
-.section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-.section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
-h2 { font-family: var(--heading-font); font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
-h2 em { font-style: normal; color: var(--blue); }
-.section-intro { font-size: 1rem; color: var(--muted); max-width: 600px; margin-bottom: 3.5rem; line-height: 1.7; }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
 
-/* HOW IT WORKS */
-#how { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
-.steps::before { content: ''; position: absolute; top: 27px; left: calc(10% + 20px); right: calc(10% + 20px); height: 1px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); opacity: 0.3; }
-.step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1rem; gap: 1rem; }
-.step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--dark3); border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-family: var(--heading-font); font-weight: 800; font-size: 1rem; color: var(--blue); position: relative; z-index: 1; flex-shrink: 0; box-shadow: 0 0 20px rgba(123,189,232,0.2); }
-.step-title { font-family: var(--heading-font); font-weight: 700; font-size: 0.88rem; color: var(--text); }
-.step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+        .nav-logo svg {
+            height: 120px;
+            width: auto;
+            display: block;
+        }
 
-/* WHAT IT DOES */
-#usecases { background: var(--dark); }
-.cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.case-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 2.25rem; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden; }
-.case-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--gold)); opacity: 0; transition: opacity 0.3s; }
-.case-card:hover { border-color: rgba(123,189,232,0.35); transform: translateY(-4px); }
-.case-card:hover::before { opacity: 1; }
-.case-icon { width: 50px; height: 50px; border-radius: 10px; background: rgba(123,189,232,0.1); border: 1px solid rgba(123,189,232,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.4rem; }
-.case-category { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
-.case-title { font-family: var(--heading-font); font-weight: 700; font-size: 1.1rem; margin-bottom: 1.1rem; color: var(--text); }
-.case-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-.case-bullets li { font-size: 0.88rem; color: var(--muted); line-height: 1.6; display: flex; align-items: flex-start; gap: 0.6rem; }
-.case-bullets li::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 0.55rem; box-shadow: 0 0 6px rgba(123,189,232,0.5); }
+        .nav-logo span {
+            font-family: var(--heading-font);
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--blue);
+            letter-spacing: 0.01em;
+        }
 
-/* SAMPLE INTERACTIONS */
-.briefing-preview { margin-top: 1.25rem; background: rgba(19,181,234,0.07); border: 1px solid rgba(123,189,232,0.15); border-radius: 8px; padding: 1rem 1.1rem; }
-.briefing-preview-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; opacity: 0.8; }
-.briefing-line { font-size: 0.78rem; color: var(--muted); line-height: 1.6; display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.2rem; }
-.briefing-line .bl-icon { flex-shrink: 0; font-size: 0.8rem; margin-top: 0.05rem; }
-.briefing-line .bl-val { color: var(--text); font-weight: 500; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
 
-/* ALSO POSSIBLE */
-.also-possible { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-.also-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
-.also-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.also-chips span { font-size: 0.8rem; color: var(--muted); background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; padding: 0.3rem 0.85rem; transition: border-color 0.2s, color 0.2s; cursor: default; }
-.also-chips span:hover { border-color: var(--blue); color: var(--blue); }
-.also-chips span:last-child { border-color: rgba(200,169,110,0.4); color: var(--gold); }
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            font-family: var(--heading-font);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
 
-/* INTEGRATIONS */
-#integrations { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.int-platforms { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-.int-platform-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem; }
-.int-platform-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: var(--heading-font); font-weight: 800; font-size: 0.85rem; flex-shrink: 0; }
-.int-platform-icon.xero  { background: linear-gradient(135deg, rgba(19,181,234,0.2), rgba(19,181,234,0.05)); border: 1px solid rgba(19,181,234,0.4); color: #13b5ea; }
-.int-platform-icon.m365  { background: linear-gradient(135deg, rgba(209,52,56,0.15), rgba(209,52,56,0.05)); border: 1px solid rgba(209,52,56,0.35); color: #d13438; }
-.int-platform-icon.teams { background: linear-gradient(135deg, rgba(98,100,167,0.2), rgba(98,100,167,0.05)); border: 1px solid rgba(98,100,167,0.4); color: #6264a7; }
-.int-platform-name { font-family: var(--heading-font); font-weight: 700; font-size: 1rem; color: var(--text); }
-.int-platform-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
-.int-connector { font-family: var(--heading-font); font-weight: 800; font-size: 1.5rem; color: var(--muted); }
-.int-note { font-size: 0.78rem; color: var(--muted); border-left: 2px solid var(--border); padding-left: 1rem; margin-top: 0.5rem; }
+        .lang-btn {
+            padding: 0.35rem 0.85rem;
+            cursor: pointer;
+            color: var(--muted);
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+        }
 
-/* ABOUT */
-#about { background: var(--dark); border-top: 1px solid var(--border); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.about-text p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.75; }
-.about-text strong { color: var(--text); font-weight: 500; }
-.location-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--gold); border: 1px solid rgba(200,169,110,0.3); padding: 0.3rem 0.75rem; border-radius: 20px; margin-top: 0.5rem; }
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.stat-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
-.stat-num { font-family: var(--heading-font); font-weight: 800; font-size: 1.9rem; color: var(--blue); letter-spacing: -0.02em; }
-.stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; line-height: 1.4; }
+        .lang-btn.active {
+            background: var(--blue);
+            color: var(--dark);
+        }
 
-/* CTA BANNER */
-#cta-banner { background: linear-gradient(135deg, rgba(123,189,232,0.07), rgba(200,169,110,0.04)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.cta-inner { max-width: 1100px; margin: 0 auto; padding: 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.cta-text h2 { margin-bottom: 0.5rem; font-size: clamp(1.5rem, 2.5vw, 2rem); }
-.cta-text p { color: var(--muted); font-size: 0.95rem; }
+        /* MAIN AREA */
+        main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* CONTACT */
-#contact { background: var(--dark); }
-.contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
-.contact-info h3 { font-family: var(--heading-font); font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem; }
-.contact-info p { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.7; }
-.contact-detail { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
-.contact-detail span:first-child { color: var(--blue); }
-.contact-detail a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.contact-detail a:hover { color: var(--blue); }
-.contact-form { display: flex; flex-direction: column; gap: 1rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-group label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.form-group input, .form-group select, .form-group textarea { background: var(--dark2); border: 1px solid var(--border); border-radius: 5px; padding: 0.75rem 1rem; color: var(--text); font-family: var(--body-font); font-size: 0.9rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(123,189,232,0.1); }
-.form-group textarea { resize: vertical; min-height: 120px; }
-.form-group select option { background: var(--dark2); }
-.form-submit { font-family: var(--heading-font); font-weight: 700; font-size: 0.83rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark); background: var(--blue); border: none; padding: 0.9rem 2rem; border-radius: 3px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; align-self: flex-start; box-shadow: 0 0 20px rgba(123,189,232,0.25); }
-.form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(123,189,232,0.35); }
-.form-note { font-size: 0.75rem; color: var(--muted); }
+        .bg-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(123, 189, 232, 0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200, 169, 110, 0.05) 0%, transparent 60%), var(--dark);
+        }
 
-/* FOOTER */
-footer { background: var(--dark2); border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.footer-logo { display: flex; align-items: center; gap: 0.6rem; }
-.footer-logo img { height: 50px; display: block; }
-.footer-logo span { font-family: var(--heading-font); font-weight: 800; font-size: 1rem; color: var(--blue); }
-.footer-copy { font-size: 0.78rem; color: var(--muted); }
-.footer-links { display: flex; gap: 1.5rem; list-style: none; }
-.footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--blue); }
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(123, 189, 232, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(123, 189, 232, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+            animation: gridDrift 20s linear infinite;
+        }
 
-/* ALWAYS-ON SECTION */
-#always-on { background: var(--dark); border-top: 1px solid var(--border); }
-.always-on-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; }
-.ao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.ao-text .section-label { margin-bottom: 1rem; }
-.ao-text h2 { margin-bottom: 1.25rem; }
-.ao-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 1rem; }
-.ao-text strong { color: var(--text); font-weight: 500; }
-.ao-pillars { display: flex; flex-direction: column; gap: 1.25rem; }
-.ao-pillar { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem 1.5rem; background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.3s, transform 0.3s; }
-.ao-pillar:hover { border-color: rgba(123,189,232,0.35); transform: translateX(4px); }
-.ao-pillar-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(123,189,232,0.1); border: 1px solid rgba(123,189,232,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-.ao-pillar-title { font-family: var(--heading-font); font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.25rem; }
-.ao-pillar-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
-@media (max-width: 1024px) { .ao-grid { grid-template-columns: 1fr; gap: 3rem; } }
-.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+        @keyframes gridDrift {
+            0% {
+                background-position: 0 0;
+            }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-  .hero-inner { flex-direction: column; gap: 3rem; align-items: flex-start; }
-  .hero-visual { width: 100%; max-width: 380px; }
-  .steps { grid-template-columns: repeat(3, 1fr); }
-  .steps::before { display: none; }
-  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-}
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  .section-inner { padding: 4rem 1.5rem; }
-  #hero { padding: 7rem 1.5rem 3rem; }
-  .hero-visual { max-width: 100%; }
-  .steps { grid-template-columns: 1fr 1fr; }
-  .cases-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .cta-inner { flex-direction: column; text-align: center; padding: 3rem 1.5rem; }
-  footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .int-platforms { gap: 1rem; }
-}
+            100% {
+                background-position: 60px 60px;
+            }
+        }
 
-/* MODAL */
-.modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 1.5rem; }
-.modal-overlay.active { display: flex; animation: modalFadeIn 0.3s ease; }
-@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-.modal-box { background: var(--dark2); border: 1px solid var(--border); border-radius: 16px; padding: 3rem 2.5rem; max-width: 480px; width: 100%; text-align: center; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 40px rgba(123,189,232,0.08); animation: modalSlideUp 0.35s cubic-bezier(0.34,1.56,0.64,1); }
-@keyframes modalSlideUp { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.modal-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(123,189,232,0.1); border: 2px solid rgba(123,189,232,0.3); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem; }
-.modal-title { font-family: var(--heading-font); font-weight: 800; font-size: 1.5rem; color: var(--text); margin-bottom: 0.75rem; letter-spacing: -0.02em; }
-.modal-msg { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
-.modal-msg strong { color: var(--text); font-weight: 500; }
-.modal-close { font-family: var(--heading-font); font-weight: 700; font-size: 0.83rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark); background: var(--blue); border: none; padding: 0.85rem 2rem; border-radius: 3px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 20px rgba(123,189,232,0.25); }
-.modal-close:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(123,189,232,0.35); }
-.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
-@keyframes spin { to { transform: rotate(360deg); } }
+        /* COMING SOON CARD */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 4rem 3.5rem;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(123, 189, 232, 0.06);
+            animation: fadeUp 0.7s 0.2s ease both;
+        }
 
-/* ADAPTIVE CARD */
-.ac { background: #f0f0f0; border: 1px solid #ddd; border-radius: 6px; padding: 0.65rem 0.75rem 0.55rem; margin-bottom: 0.1rem; }
-.ac-title { font-size: 0.7rem; font-weight: 700; color: #444; margin-bottom: 0.5rem; letter-spacing: 0.01em; }
-.ac-row { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.22rem; }
-.ac-label { font-size: 0.67rem; color: #888; }
-.ac-value { font-size: 0.67rem; font-weight: 600; color: #111; text-align: right; }
-.ac-divider { height: 1px; background: #ddd; margin: 0.45rem 0 0.4rem; }
-.ac-actions { display: flex; gap: 0.4rem; }
-.ac-btn { font-size: 0.67rem; font-weight: 600; padding: 0.26rem 0.6rem; border-radius: 3px; cursor: default; line-height: 1.4; border: none; }
-.ac-btn.confirm { background: #6264a7; color: #fff; }
-.ac-btn.cancel { background: #fff; color: #6264a7; border: 1px solid #c8c8d8; }
-.invoice-link { color: #6264a7; text-decoration: underline; font-weight: 600; cursor: pointer; }
-</style>
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blue), var(--gold), var(--blue), transparent);
+            opacity: 0.6;
+            border-radius: 50%;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-eyebrow::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .card-eyebrow::after {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .card h1 {
+            font-family: var(--heading-font);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+        }
+
+        .card h1 em {
+            font-style: normal;
+            color: var(--blue);
+        }
+
+        .card p {
+            font-size: 0.98rem;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 380px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .card-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .card-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+
+        .card-dot:nth-child(1) {
+            background: var(--blue);
+            animation-delay: 0s;
+        }
+
+        .card-dot:nth-child(2) {
+            background: rgba(123, 189, 232, 0.5);
+            animation-delay: 0.3s;
+        }
+
+        .card-dot:nth-child(3) {
+            background: rgba(123, 189, 232, 0.25);
+            animation-delay: 0.6s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 1;
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark2);
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .footer-logo svg {
+            height:100px;
+            display: block;
+        }
+
+        .footer-copy {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--blue);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .card {
+                padding: 3rem 1.75rem;
+            }
+
+            footer {
+                padding: 2rem 1.5rem;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#hero">
-    <img id="nav-logo-img" src="data:image/png;base64,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" alt="MoravaSoft">
-  </a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#how" id="nav-how">How It Works</a></li>
-      <li><a href="#usecases" id="nav-cases">What It Does</a></li>
-      <li><a href="#about" id="nav-about">About</a></li>
-      <li><a href="#contact" class="nav-cta" id="nav-demo">Get a Demo</a></li>
-    </ul>
-    <div class="lang-toggle">
-      <div class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</div>
-      <div class="lang-btn" data-lang="cs" onclick="setLang('cs')">CS</div>
-    </div>
-  </div>
-</nav>
+    <!-- NAV -->
+    <nav>
+        <a class="nav-logo" href="#">
+            <?xml version="1.0" encoding="UTF-8"?>
+            <svg viewBox="130 75 680 260" xmlns="http://www.w3.org/2000/svg">
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-eyebrow" id="hero-eyebrow">AI Finance Assistant · Microsoft Teams + Xero</div>
-      <h1 class="hero-h1" id="hero-h1">Your Xero, fully accessible — <em>straight from Teams.</em></h1>
-      <p class="hero-sub" id="hero-sub">MoravaSoft's AI assistant connects Microsoft Teams directly to Xero. Ask questions, raise invoices, log expenses — all through natural conversation, without opening a browser.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary" id="hero-cta1">Request a Demo</a>
-        <a href="#how" class="btn-secondary" id="hero-cta2">See How It Works</a>
-      </div>
-    </div>
+                <defs>
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&amp;display=swap');
+                    </style>
+                </defs>
 
-    <!-- Teams chat mockup -->
-    <div class="hero-visual">
-      <div class="chat-header">
-        <div class="chat-avatar-wrap">
-          <div class="chat-avatar">
-            <img id="nav-logo-img" src="data:image/png;base64,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" alt="MoravaSoft">
-          </div>
-          <div class="chat-online-dot"></div>
-        </div>
-        <div class="chat-info">
-          <div class="chat-title" id="chat-title">Eva</div>
-          <div class="chat-status" id="chat-status-text">● Available</div>
-        </div>
-        <div class="chat-header-icons">📞 ⋮</div>
-      </div>
-      <div class="chat-body">
-        <div class="chat-date-divider" id="chat-date">Today</div>
+                <!-- M — shifted left so gap from M to O ring matches gap from O ring to R -->
+                <text x="145.6" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#7bbde8">
+                    M</text>
+                <!-- RAVA -->
+                <text x="240.7" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#7bbde8">
+                    RAVA</text>
+                <!-- SOFT — tightened to match natural letter spacing -->
+                <text x="415.7" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#c8a96e">
+                    SOFT</text>
 
-        <div class="msg msg-user">
-          <div class="msg-bubble" id="chat-user">
-            Create an invoice for $4,500 to Hargreavess Ltd. for prototype design.
-            <div class="msg-time">09:14</div>
-          </div>
-        </div>
+                <!-- COMPASS ROSE — centered on O: x=221.4, y=156.3 -->
+                <g transform="translate(221.4, 156.3)">
+                    <!-- N spike -->
+                    <polygon points="0,-72 3,-24 0,-15 -3,-24" fill="#7bbde8" />
+                    <!-- S spike -->
+                    <polygon points="0,72 -3,24 0,15 3,24" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- E spike -->
+                    <polygon points="72,0 24,3 15,0 24,-3" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- W spike -->
+                    <polygon points="-72,0 -24,-3 -15,0 -24,3" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- Diagonal gold ticks -->
+                    <g stroke="#c8a96e" stroke-width="1.6" opacity="0.85" stroke-linecap="round">
+                        <line x1="28" y1="-28" x2="38" y2="-38" />
+                        <line x1="-28" y1="-28" x2="-38" y2="-38" />
+                        <line x1="28" y1="28" x2="38" y2="38" />
+                        <line x1="-28" y1="28" x2="-38" y2="38" />
+                    </g>
+                    <!-- O ring — sized to match letter cap-height -->
+                    <circle r="13" fill="none" stroke="#7bbde8" stroke-width="8" />
+                    <!-- Center dot -->
+                    <circle r="3" fill="#c8a96e" />
+                </g>
 
-        <div class="msg msg-ai">
-          <div class="msg-bubble" id="chat-ai-reply">
-            <div class="ac">
-              <div class="ac-title">📋 New Invoice — please confirm</div>
-              <div class="ac-row"><span class="ac-label">Company</span><span class="ac-value">Hargreavess Ltd</span></div>
-              <div class="ac-row"><span class="ac-label">Description</span><span class="ac-value">Prototype design</span></div>
-              <div class="ac-row"><span class="ac-label">Amount</span><span class="ac-value">$4,500.00</span></div>
-              <div class="ac-row"><span class="ac-label">Due Date</span><span class="ac-value">14 May 2026</span></div>
-              <div class="ac-divider"></div>
-              <div class="ac-actions">
-                <button class="ac-btn confirm">Confirm</button>
-                <button class="ac-btn cancel">Cancel</button>
-              </div>
+            </svg>
+        </a>
+        <div class="nav-right">
+            <div class="lang-toggle">
+                <div class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</div>
+                <div class="lang-btn" data-lang="cs" onclick="setLang('cs')">CS</div>
             </div>
-            <div class="msg-time">09:14</div>
-          </div>
         </div>
+    </nav>
 
-        <div class="msg msg-user">
-          <div class="msg-bubble" id="chat-user2">
-            Confirm
-            <div class="msg-time">09:15</div>
-          </div>
+    <!-- MAIN -->
+    <main>
+        <div class="bg-glow"></div>
+        <div class="bg-grid"></div>
+        <div class="card">
+            <div class="card-eyebrow" id="card-eyebrow">Custom Software Development</div>
+            <h1 id="card-h1">Our new website is <em>coming soon.</em></h1>
+            <p id="card-p">We build custom software solutions tailored to your business. In the meantime, reach out
+                directly — we'd love to hear about your project.</p>
+            <div class="card-dots">
+                <div class="card-dot"></div>
+                <div class="card-dot"></div>
+                <div class="card-dot"></div>
+            </div>
         </div>
+    </main>
 
-        <div class="msg msg-ai">
-          <div class="msg-bubble" id="chat-ai-brief">
-            <a class="invoice-link">INV0032</a> has been created.
-            <div class="msg-time">09:15</div>
-          </div>
-        </div>
-      </div>
-      <div class="chat-typing">
-        <div class="typing-bubble">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">
+            <?xml version="1.0" encoding="UTF-8"?>
+            <svg viewBox="130 75 680 260" xmlns="http://www.w3.org/2000/svg">
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-inner">
-    <div class="section-label" id="how-label">The Process</div>
-    <h2 id="how-h2">From message to Xero action — <em>in seconds</em></h2>
-    <p class="section-intro" id="how-intro">No Xero portal to open. No forms to fill in. Ask a question, raise an invoice, or log an expense — just type in Teams and the assistant handles it.</p>
-    <div class="steps">
-      <div class="step fade-in">
-        <div class="step-num">1</div>
-        <div class="step-title" id="step-t0">Open Teams</div>
-        <div class="step-desc" id="step-d0">The assistant runs inside Microsoft Teams as a bot. No new software, no separate login — open the chat and start typing.</div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">2</div>
-        <div class="step-title" id="step-t1">Describe the Task</div>
-        <div class="step-desc" id="step-d1">Type what you need: an invoice for a client, or an expense to record. Use plain language — no special format or commands required.</div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">3</div>
-        <div class="step-title" id="step-t2">AI Understands</div>
-        <div class="step-desc" id="step-d2">The assistant extracts the details — client, amount, date, account code — and prepares the Xero record, ready for your review.</div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">4</div>
-        <div class="step-title" id="step-t3">You Confirm</div>
-        <div class="step-desc" id="step-d3">The assistant shows you a summary of what it will create. You approve with a single reply — or ask it to adjust any detail first.</div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">5</div>
-        <div class="step-title" id="step-t4">Saved in Xero ✓</div>
-        <div class="step-desc" id="step-d4">The invoice or expense is created directly in your Xero organisation via the API. You get a confirmation with the Xero reference number.</div>
-      </div>
-    </div>
-  </div>
-</section>
+                <defs>
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&amp;display=swap');
+                        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&amp;display=swap');
+                    </style>
+                </defs>
 
-<!-- ALWAYS-ON AI -->
-<section id="always-on">
-  <div class="always-on-inner">
-    <div class="ao-grid">
-      <div class="ao-text">
-        <div class="section-label" id="ao-label">Your Always-On Finance Assistant</div>
-        <h2 id="ao-h2">One chat. Your entire Xero. <em>Always within reach.</em></h2>
-        <p id="ao-p1">Before, any Xero task meant stopping what you were doing, opening a browser, logging in, and navigating to the right screen. Whether you wanted to check an invoice, log an expense, or answer a quick financial question — each one pulled you away from your work.</p>
-        <p id="ao-p2"><strong>With MoravaSoft, your Xero is always one message away.</strong> The assistant is permanently connected to your Xero organisation via a secure API. Ask it a question or give it an action to carry out — it responds in seconds, without you ever leaving Teams.</p>
-      </div>
-      <div class="ao-pillars">
-        <div class="ao-pillar fade-in">
-          <div class="ao-pillar-icon">🕐</div>
-          <div>
-            <div class="ao-pillar-title" id="ao-t1">Available whenever you need it</div>
-            <div class="ao-pillar-desc" id="ao-d1">On-site with a client, travelling, or working late — the assistant is always ready. Raise an invoice or log an expense the moment it happens, not when you're back at your desk.</div>
-          </div>
-        </div>
-        <div class="ao-pillar fade-in">
-          <div class="ao-pillar-icon">🔗</div>
-          <div>
-            <div class="ao-pillar-title" id="ao-t2">Writes directly to Xero</div>
-            <div class="ao-pillar-desc" id="ao-d2">Every invoice and expense is created via the Xero API in real time. The record appears in your Xero organisation immediately — no sync, no import, no delay.</div>
-          </div>
-        </div>
-        <div class="ao-pillar fade-in">
-          <div class="ao-pillar-icon">💬</div>
-          <div>
-            <div class="ao-pillar-title" id="ao-t3">Natural language, any language</div>
-            <div class="ao-pillar-desc" id="ao-d3">Type in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically. No commands to learn, no rigid format to follow.</div>
-          </div>
-        </div>
-        <div class="ao-pillar fade-in">
-          <div class="ao-pillar-icon">✅</div>
-          <div>
-            <div class="ao-pillar-title" id="ao-t4">Always confirms before saving</div>
-            <div class="ao-pillar-desc" id="ao-d4">The assistant shows you what it will create and waits for your approval. You stay in control — nothing is written to Xero without your explicit confirmation.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                <!-- M — shifted left so gap from M to O ring matches gap from O ring to R -->
+                <text x="145.6" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#7bbde8">
+                    M</text>
+                <!-- RAVA -->
+                <text x="240.7" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#7bbde8">
+                    RAVA</text>
+                <!-- SOFT — tightened to match natural letter spacing -->
+                <text x="415.7" y="175" font-family="'Lexend Mega'" font-weight="700" font-size="52" fill="#c8a96e">
+                    SOFT</text>
 
-<!-- WHAT IT DOES -->
-<section id="usecases">
-  <div class="section-inner">
-    <div class="section-label" id="cases-label">What It Does</div>
-    <h2 id="cases-h2">Built on Xero. <em>Used from Teams.</em></h2>
-    <p class="section-intro" id="cases-intro">The assistant can query your Xero data and take actions on your behalf. Right now it focuses on invoice creation and expense logging — the two tasks that interrupt most working days. More Xero capabilities are on the way.</p>
-    <div class="cases-grid">
+                <!-- COMPASS ROSE — centered on O: x=221.4, y=156.3 -->
+                <g transform="translate(221.4, 156.3)">
+                    <!-- N spike -->
+                    <polygon points="0,-72 3,-24 0,-15 -3,-24" fill="#7bbde8" />
+                    <!-- S spike -->
+                    <polygon points="0,72 -3,24 0,15 3,24" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- E spike -->
+                    <polygon points="72,0 24,3 15,0 24,-3" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- W spike -->
+                    <polygon points="-72,0 -24,-3 -15,0 -24,3" fill="none" stroke="#7bbde8" stroke-width="1.6"
+                        opacity="0.55" />
+                    <!-- Diagonal gold ticks -->
+                    <g stroke="#c8a96e" stroke-width="1.6" opacity="0.85" stroke-linecap="round">
+                        <line x1="28" y1="-28" x2="38" y2="-38" />
+                        <line x1="-28" y1="-28" x2="-38" y2="-38" />
+                        <line x1="28" y1="28" x2="38" y2="38" />
+                        <line x1="-28" y1="28" x2="-38" y2="38" />
+                    </g>
+                    <!-- O ring — sized to match letter cap-height -->
+                    <circle r="13" fill="none" stroke="#7bbde8" stroke-width="8" />
+                    <!-- Center dot -->
+                    <circle r="3" fill="#c8a96e" />
+                </g>
 
-      <div class="case-card fade-in">
-        <div class="case-icon">🧾</div>
-        <div class="case-category" id="case-cat0">Invoice Creation</div>
-        <div class="case-title" id="case-title0">Raise a Xero Invoice by Chat</div>
-        <ul class="case-bullets" id="case-bullets0">
-          <li>Create a sales invoice by typing the contact name, amount, and due date — the assistant fills in the rest</li>
-          <li>Specify line items, quantities, and account codes conversationally in a follow-up message</li>
-          <li>Choose Draft or Approved status — both are supported via the Xero Invoices API</li>
-          <li>Send the invoice to your Xero contact's email directly from the Teams chat</li>
-          <li>Look up any existing invoice in Xero by contact name or invoice number</li>
+            </svg>
+        </div>
+        <p class="footer-copy" id="footer-copy">2026 MoravaSoft · Morava, Czech Republic</p>
+        <ul class="footer-links">
+            <li><a href="mailto:info@moravasoft.com">info@moravasoft.com</a></li>
         </ul>
-        <div class="briefing-preview">
-          <div class="briefing-preview-label" id="bp-label">Sample Interactions</div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line1">"Invoice Hargreavess Ltd $2,400, 30 days" &rarr; <span class="bl-val">INV-0087 created in Xero</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line2">"Add line: 8hrs consulting at $300" &rarr; <span class="bl-val">Line item added</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line3">"Send it to the contact" &rarr; <span class="bl-val">Sent to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dbbab8b8b4aeb5afa89bb3baa9bca9bebaadbea8f5b8b4f5aeb0">[email&#160;protected]</a></span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line4">"Show my draft invoices" &rarr; <span class="bl-val">3 drafts found in Xero</span></span></div>
-        </div>
-      </div>
+    </footer>
 
-      <div class="case-card fade-in">
-        <div class="case-icon">🧾</div>
-        <div class="case-category" id="case-cat1">Expense Logging</div>
-        <div class="case-title" id="case-title1">Record an Expense in Xero by Chat</div>
-        <ul class="case-bullets" id="case-bullets1">
-          <li>Log a spend money transaction by describing what you bought — amount, supplier, and date</li>
-          <li>Assign to a Xero account code and tracking category in the same message</li>
-          <li>The expense is saved to Xero as an unreconciled bank transaction via the Bank Transactions API</li>
-          <li>Review the summary before it is saved — adjust any field with a follow-up message</li>
-          <li>Query your logged expenses for any date range by simply asking</li>
-        </ul>
-        <div class="briefing-preview">
-          <div class="briefing-preview-label" id="bp-label2">Sample Interactions</div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line5">"Log $85 client lunch, charge to marketing" &rarr; <span class="bl-val">EXP-0021 saved in Xero</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line6">"Supplier: Premier Inn, $240 hotel stay" &rarr; <span class="bl-val">EXP-0022 created</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line7">"Assign to project Alpha" &rarr; <span class="bl-val">Tracking category updated</span></span></div>
-          <div class="briefing-line"><span class="bl-icon">💬</span><span id="bp-line8">"What did I expense this week?" &rarr; <span class="bl-val">3 expenses, total $397.50</span></span></div>
-        </div>
-      </div>
+    <script>
+        var T = {
+            en: {
+                eyebrow: "Custom Software Development",
+                h1: "Our new website is <em>coming soon.</em>",
+                p: "We build custom software solutions tailored to your business. In the meantime, reach out directly — we'd love to hear about your project.",
+                footerCopy: "2026 MoravaSoft · Morava, Czech Republic"
+            },
+            cs: {
+                eyebrow: "Vývoj softwaru na míru",
+                h1: "Nový web <em>přichází brzy.</em>",
+                p: "Vyvíjíme softwarová řešení šitá na míru vašemu podnikání. Neváhejte nás mezitím kontaktovat — rádi si o vašem projektu popovídáme.",
+                footerCopy: "2026 MoravaSoft · Morava, Česká republika"
+            }
+        };
 
-    </div>
+        function setLang(l) {
+            var t = T[l];
+            document.documentElement.lang = l;
+            var eyebrow = document.getElementById('card-eyebrow');
+            var h1 = document.getElementById('card-h1');
+            var p = document.getElementById('card-p');
+            var fc = document.getElementById('footer-copy');
+            if (eyebrow) eyebrow.textContent = t.eyebrow;
+            if (h1) h1.innerHTML = t.h1;
+            if (p) p.textContent = t.p;
+            if (fc) fc.textContent = t.footerCopy;
+            document.querySelectorAll('.lang-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.lang === l);
+            });
+        }
 
-    <div class="also-possible">
-      <div class="also-label" id="also-label">Also available through the same assistant</div>
-      <div class="also-chips" id="also-chips">
-        <span>Check invoice status</span>
-        <span>View overdue receivables</span>
-        <span>Look up contact balances</span>
-        <span>Record supplier bills</span>
-        <span>Query recent transactions</span>
-        <span>Check account balances</span>
-        <span>+ more on request</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INTEGRATIONS -->
-<section id="integrations">
-  <div class="section-inner">
-    <div class="section-label" id="int-label">Integrations</div>
-    <h2 id="int-h2">Works with <em>Xero</em> via <em>Microsoft Teams</em></h2>
-    <p class="section-intro" id="int-intro">The MoravaSoft Finance Assistant connects securely to your existing Xero organisation — no new software, no data migration. Your team keeps working in Microsoft Teams like they always do.</p>
-    <div class="int-platforms">
-      <div class="int-platform-card fade-in">
-        <div class="int-platform-icon xero">XE</div>
-        <div>
-          <div class="int-platform-name">Xero</div>
-          <div class="int-platform-sub" id="int-sub-xero">Xero · Cloud Accounting &amp; Finance</div>
-        </div>
-      </div>
-      <div class="int-connector">+</div>
-      <div class="int-platform-card fade-in">
-        <div class="int-platform-icon m365">365</div>
-        <div>
-          <div class="int-platform-name">Microsoft 365</div>
-          <div class="int-platform-sub" id="int-sub-m365">Azure AD · Your existing tenant</div>
-        </div>
-      </div>
-      <div class="int-connector">→</div>
-      <div class="int-platform-card fade-in" style="border-color:rgba(98,100,167,0.4);">
-        <div class="int-platform-icon teams">MT</div>
-        <div>
-          <div class="int-platform-name">Microsoft Teams</div>
-          <div class="int-platform-sub" id="int-sub-teams">Microsoft · Your daily workspace</div>
-        </div>
-      </div>
-    </div>
-    <p class="int-note" id="int-note">Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · API access scoped to invoices and bank transactions only · Works on any device with Teams</p>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-label" id="about-label">About Us</div>
-        <h2 id="about-h2">Small team. <em>Big impact.</em></h2>
-        <p id="about-p1">MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams get things done in Xero through the tools they already use every day.</p>
-        <p id="about-p2">Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We put your Xero assistant right there — so raising an invoice or logging an expense takes one message, not a trip to the portal.</p>
-        <p id="about-p3">We work closely with each client to understand their workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.</p>
-        <div class="location-tag" id="about-location">📍 Morava, Czech Republic · Founded 2026</div>
-      </div>
-      <div class="about-stats">
-        <div class="stat-card fade-in">
-          <div class="stat-num">24/7</div>
-          <div class="stat-label" id="stat-label0">Raise invoices and log expenses any time, from anywhere</div>
-        </div>
-        <div class="stat-card fade-in">
-          <div class="stat-num">0</div>
-          <div class="stat-label" id="stat-label1">New apps to install — runs in the Microsoft Teams you already have</div>
-        </div>
-        <div class="stat-card fade-in">
-          <div class="stat-num">Live</div>
-          <div class="stat-label" id="stat-label2">Records written directly to Xero via the API in real time</div>
-        </div>
-        <div class="stat-card fade-in">
-          <div class="stat-num">&lt; 10s</div>
-          <div class="stat-label" id="stat-label3">From message to confirmed Xero record</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BANNER -->
-<section id="cta-banner">
-  <div class="cta-inner">
-    <div class="cta-text">
-      <h2 id="cta-h2">Ready to put Xero inside Teams?</h2>
-      <p id="cta-p">Book a live demo and we will show you the assistant answering Xero queries, creating a real invoice, and logging an expense — all from a Teams chat, written directly into a live Xero organisation.</p>
-    </div>
-    <a href="#contact" class="btn-primary" id="cta-btn">Request a Free Demo</a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="contact-grid">
-      <div class="contact-info">
-        <div class="section-label" id="contact-label">Contact</div>
-        <h3 id="contact-h3">Let's set up your demo</h3>
-        <p id="contact-p">Tell us about your Xero setup — your company size and how your team currently handles invoicing and expenses. We'll tailor the demo to your situation and respond within one business day.</p>
-        <div class="contact-detail"><span>✉</span><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#111;&#114;&#97;&#118;&#97;&#115;&#111;&#102;&#116;&#46;&#99;&#111;&#109;">&#105;&#110;&#102;&#111;&#64;&#109;&#111;&#114;&#97;&#118;&#97;&#115;&#111;&#102;&#116;&#46;&#99;&#111;&#109;</a></div>
-        <div class="contact-detail"><span>📍</span><span id="contact-address">Morava, Czech Republic</span></div>
-        <div class="contact-detail"><span>🕐</span><span id="contact-hours">Mon–Fri, CET business hours</span></div>
-      </div>
-      <div>
-        <form class="contact-form" id="contactForm" name="contact">
-          <input type="hidden" name="_honey" style="display:none">
-          <input type="hidden" name="_captcha" value="true">
-          <div class="form-row">
-            <div class="form-group">
-              <label id="f-first-lbl">First Name *</label>
-              <input type="text" name="firstName" required placeholder="David">
-            </div>
-            <div class="form-group">
-              <label id="f-last-lbl">Last Name *</label>
-              <input type="text" name="lastName" required placeholder="Valenta">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label id="f-email-lbl">Work Email *</label>
-              <input type="email" name="email" required placeholder="you@mycompany.com">
-            </div>
-            <div class="form-group">
-              <label id="f-company-lbl">Company / Organisation</label>
-              <input type="text" name="company" id="f-company-input" placeholder="Your Company Name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label id="f-system-lbl">Company Size</label>
-            <select name="system">
-              <option id="f-system-def" value="">Number of employees</option>
-              <option id="f-opt1">1 – 10 employees</option>
-              <option id="f-opt2">11 – 50 employees</option>
-              <option id="f-opt3">51 – 200 employees</option>
-              <option id="f-opt4">200+ employees</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label id="f-msg-lbl">Tell us about your setup *</label>
-            <textarea id="f-msg" name="message" required placeholder="e.g. We use Xero and Microsoft Teams. Our team raises around 50 invoices a month and I want to be able to do it without opening Xero each time..."></textarea>
-          </div>
-          <button type="submit" class="form-submit" id="f-submit">Send Message &#8594;</button>
-          <p class="form-note" id="f-note">We'll respond within 1 business day. No spam, ever.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <img id="nav-logo-img" src="data:image/png;base64,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" alt="MoravaSoft">
-  </div>
-  <p class="footer-copy" id="footer-copy">2026 MoravaSoft · Morava, Czech Republic</p>
-  <ul class="footer-links">
-    <li><a href="#hero" id="fl-home">Home</a></li>
-    <li><a href="#how" id="fl-how">How It Works</a></li>
-    <li><a href="#about" id="fl-about">About</a></li>
-    <li><a href="#contact" id="fl-contact">Contact</a></li>
-  </ul>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var T = {
-  en: {
-    navHow: "How It Works", navCases: "What It Does", navAbout: "About", navDemo: "Get a Demo",
-    heroEyebrow: "AI Finance Assistant · Microsoft Teams + Xero",
-    heroH1: "Your Xero, fully accessible — <em>straight from Teams.</em>",
-    heroSub: "MoravaSoft's AI assistant connects Microsoft Teams directly to Xero. Ask questions, raise invoices, log expenses — all through natural conversation, without opening a browser.",
-    heroCta1: "Request a Demo", heroCta2: "See How It Works",
-    chatTitle: "Eva", chatStatusText: "Available", chatDate: "Today",
-    chatUser: "Create an invoice for $4,500 to Hargreavess Ltd. for prototype design.<div class='msg-time'>09:14</div>",
-    chatAiReply: "<div class='ac'><div class='ac-title'>&#128203; New Invoice &mdash; please confirm</div><div class='ac-row'><span class='ac-label'>Company</span><span class='ac-value'>Hargreavess Ltd</span></div><div class='ac-row'><span class='ac-label'>Description</span><span class='ac-value'>Prototype design</span></div><div class='ac-row'><span class='ac-label'>Amount</span><span class='ac-value'>$4,500.00</span></div><div class='ac-row'><span class='ac-label'>Due Date</span><span class='ac-value'>14 May 2026</span></div><div class='ac-divider'></div><div class='ac-actions'><button class='ac-btn confirm'>Confirm</button><button class='ac-btn cancel'>Cancel</button></div></div><div class='msg-time'>09:14</div>",
-    chatUser2: "Confirm<div class='msg-time'>09:15</div>",
-    chatAiBrief: "<a class='invoice-link'>INV-0032</a> has been created.<div class='msg-time'>09:15</div>",
-    howLabel: "The Process",
-    howH2: "From message to Xero action — <em>in seconds</em>",
-    howIntro: "No Xero portal to open. No forms to fill in. Ask a question, raise an invoice, or log an expense — just type in Teams and the assistant handles it.",
-    steps: [
-      { t: "Open Teams", d: "The assistant runs inside Microsoft Teams as a bot. No new software, no separate login — open the chat and start typing." },
-      { t: "Describe the Task", d: "Type what you need: an invoice for a client, or an expense to record. Use plain language — no special format or commands required." },
-      { t: "AI Understands", d: "The assistant extracts the details — client, amount, date, account code — and prepares the Xero record, ready for your review." },
-      { t: "You Confirm", d: "The assistant shows you a summary of what it will create. You approve with a single reply — or ask it to adjust any detail first." },
-      { t: "Saved in Xero ✓", d: "The invoice or expense is created directly in your Xero organisation via the API. You get a confirmation with the Xero reference number." }
-    ],
-    casesLabel: "What It Does",
-    casesH2: "Built on Xero. <em>Used from Teams.</em>",
-    casesIntro: "The assistant can query your Xero data and take actions on your behalf. Right now it focuses on invoice creation and expense logging — the two tasks that interrupt most working days. More Xero capabilities are on the way.",
-    bpLabel: "Sample Interactions",
-    bpLabel2: "Sample Interactions",
-    cases: [
-      {
-        cat: "Invoice Creation", title: "Raise a Xero Invoice by Chat",
-        bullets: [
-          "Create a sales invoice by typing the contact name, amount, and due date — the assistant fills in the rest",
-          "Specify line items, quantities, and account codes conversationally in a follow-up message",
-          "Choose Draft or Approved status — both are supported via the Xero Invoices API",
-          "Send the invoice to your Xero contact's email directly from the Teams chat",
-          "Look up any existing invoice in Xero by contact name or invoice number"
-        ]
-      },
-      {
-        cat: "Expense Logging", title: "Record an Expense in Xero by Chat",
-        bullets: [
-          "Log a spend money transaction by describing what you bought — amount, supplier, and date",
-          "Assign to a Xero account code and tracking category in the same message",
-          "The expense is saved to Xero as an unreconciled bank transaction via the Bank Transactions API",
-          "Review the summary before it is saved — adjust any field with a follow-up message",
-          "Query your logged expenses for any date range by simply asking"
-        ]
-      }
-    ],
-    bpLines: [
-      '"Invoice Hargreavess Ltd $2,400, 30 days" &rarr; <span class="bl-val">INV-0087 created in Xero</span>',
-      '"Add line: 8hrs consulting at $300" &rarr; <span class="bl-val">Line item added</span>',
-      '"Send it to the contact" &rarr; <span class="bl-val">Sent to accounts@hargreavess.com</span>',
-      '"Show my draft invoices" &rarr; <span class="bl-val">3 drafts found in Xero</span>'
-    ],
-    bpLines2: [
-      '"Log $85 client lunch, charge to marketing" &rarr; <span class="bl-val">EXP-0021 saved in Xero</span>',
-      '"Supplier: Premier Inn, $240 hotel stay" &rarr; <span class="bl-val">EXP-0022 created</span>',
-      '"Assign to project Alpha" &rarr; <span class="bl-val">Tracking category updated</span>',
-      '"What did I expense this week?" &rarr; <span class="bl-val">3 expenses, total $397.50</span>'
-    ],
-    alsoLabel: "Also available through the same assistant",
-    alsoChips: ["Check invoice status", "View overdue receivables", "Look up contact balances", "Record supplier bills", "Query recent transactions", "Check account balances", "+ more on request"],
-    intLabel: "Integrations",
-    intH2: "Works with <em>Xero</em> via <em>Microsoft Teams</em>",
-    intIntro: "The MoravaSoft Finance Assistant connects securely to your existing Xero organisation — no new software, no data migration. Your team keeps working in Microsoft Teams like they always do.",
-    intNote: "Secure Xero API · OAuth 2.0 authentication · No financial data stored by MoravaSoft · API access scoped to invoices and bank transactions only · Works on any device with Teams",
-    aboutLabel: "About Us",
-    aboutH2: "Small team. <em>Big impact.</em>",
-    aboutP1: "MoravaSoft is a software development company specialising in AI-powered automation for finance and accounting operations. We build assistants that let business owners and finance teams get things done in Xero through the tools they already use every day.",
-    aboutP2: "Our approach is simple: the best tool is the one already open on your screen. Microsoft Teams is where your organisation communicates. We put your Xero assistant right there — so raising an invoice or logging an expense takes one message, not a trip to the portal.",
-    aboutP3: "We work closely with each client to understand their workflows, configure the assistant to their Xero setup, and deliver something their team genuinely wants to use — from day one.",
-    aboutLocation: "Morava, Czech Republic · Founded 2026",
-    ctaH2: "Ready to put Xero inside Teams?",
-    ctaP: "Book a live demo and we will show you the assistant answering Xero queries, creating a real invoice, and logging an expense — all from a Teams chat, written directly into a live Xero organisation.",
-    ctaBtn: "Request a Free Demo",
-    contactLabel: "Contact", contactH3: "Let's set up your demo",
-    contactP: "Tell us about your Xero setup — your company size and how your team currently handles invoicing and expenses. We'll tailor the demo to your situation and respond within one business day.",
-    contactHours: "Mon–Fri, CET business hours",
-    fFirst: "First Name", fLast: "Last Name", fEmail: "Work Email", fCompany: "Company / Organisation",
-    fSystem: "Company Size", fSystemDef: "Number of employees",
-    fMsg: "Tell us about your setup",
-    fMsgPh: "e.g. We use Xero and Microsoft Teams. Our team raises around 50 invoices a month and I want to be able to do it without opening Xero each time...",
-    fBtn: "Send Message", fNote: "We'll respond within 1 business day. No spam, ever.",
-    fSuccess: "Thank you! We've received your message and will be in touch shortly.",
-    modalTitle: "Message sent!",
-    modalMsg: "Thanks for reaching out — we've received your message and will get back to you <strong>within one business day.</strong> We look forward to showing you what the assistant can do for your team.",
-    modalClose: "Close",
-    footerCopy: "2026 MoravaSoft · Morava, Czech Republic",
-    flHome: "Home", flHow: "How It Works", flAbout: "About", flContact: "Contact",
-    aoLabel: "Your Always-On Finance Assistant",
-    aoH2: "One chat. Your entire Xero. <em>Always within reach.</em>",
-    aoP1: "Before, any Xero task meant stopping what you were doing, opening a browser, logging in, and navigating to the right screen. Whether you wanted to check an invoice, log an expense, or answer a quick financial question — each one pulled you away from your work.",
-    aoP2: "With MoravaSoft, your Xero is always one message away. The assistant is permanently connected to your Xero organisation via a secure API. Ask it a question or give it an action to carry out — it responds in seconds, without you ever leaving Teams.",
-    aoPillars: [
-      { t: "Available whenever you need it", d: "On-site with a client, travelling, or working late — the assistant is always ready. Raise an invoice or log an expense the moment it happens, not when you're back at your desk." },
-      { t: "Writes directly to Xero", d: "Every invoice and expense is created via the Xero API in real time. The record appears in your Xero organisation immediately — no sync, no import, no delay." },
-      { t: "Natural language, any language", d: "Type in English, Czech, or Dutch — or switch mid-conversation. The assistant detects your language automatically. No commands to learn, no rigid format to follow." },
-      { t: "Always confirms before saving", d: "The assistant shows you what it will create and waits for your approval. You stay in control — nothing is written to Xero without your explicit confirmation." }
-    ],
-    intSubXero: "Xero · Cloud Accounting & Finance",
-    intSubM365: "Azure AD · Your existing tenant",
-    intSubTeams: "Microsoft · Your daily workspace",
-    statLabels: [
-      "Raise invoices and log expenses any time, from anywhere",
-      "New apps to install — runs in the Microsoft Teams you already have",
-      "Records written directly to Xero via the API in real time",
-      "From message to confirmed Xero record"
-    ],
-    contactAddress: "Morava, Czech Republic",
-    fCompanyPh: "Your Company Name",
-    fOpts: ["1 – 10 employees", "11 – 50 employees", "51 – 200 employees", "200+ employees"]
-  },
-  cs: {
-    navHow: "Jak to funguje", navCases: "Co umí", navAbout: "O nás", navDemo: "Požádat o demo",
-    heroEyebrow: "AI finanční asistent · Microsoft Teams + Xero",
-    heroH1: "Váš Xero, vždy dostupný — <em>přímo z Teams.</em>",
-    heroSub: "AI asistent MoravaSoft propojuje Microsoft Teams přímo s Xero. Ptejte se, vystavujte faktury, evidujte výdaje — vše přirozenou konverzací, bez otevírání prohlížeče.",
-    heroCta1: "Požádat o demo", heroCta2: "Jak to funguje",
-    chatTitle: "Eva", chatStatusText: "Dostupný", chatDate: "Dnes",
-    chatUser: "Vytvořte fakturu na 105 000 Kč pro Hargreavess Ltd. za návrh prototypu.<div class='msg-time'>09:14</div>",
-    chatAiReply: "<div class='ac'><div class='ac-title'>&#128203; Nová faktura &mdash; potvrďte prosím</div><div class='ac-row'><span class='ac-label'>Firma</span><span class='ac-value'>Hargreavess Ltd</span></div><div class='ac-row'><span class='ac-label'>Popis</span><span class='ac-value'>Návrh prototypu</span></div><div class='ac-row'><span class='ac-label'>Částka</span><span class='ac-value'>105 000 Kč</span></div><div class='ac-row'><span class='ac-label'>Splatnost</span><span class='ac-value'>14. 5. 2026</span></div><div class='ac-divider'></div><div class='ac-actions'><button class='ac-btn confirm'>Potvrdit</button><button class='ac-btn cancel'>Zrušit</button></div></div><div class='msg-time'>09:14</div>",
-    chatUser2: "Potvrdit<div class='msg-time'>09:15</div>",
-    chatAiBrief: "<a class='invoice-link'>FAK0032</a> byla vytvořena.<div class='msg-time'>09:15</div>",
-    howLabel: "Proces",
-    howH2: "Od zprávy k akci v Xero — <em>během vteřin</em>",
-    howIntro: "Žádný portál Xero k otevírání. Žádné formuláře. Zeptejte se, vystavte fakturu nebo zaznamenejte výdaj — napište v Teams a asistent se postará o zbytek.",
-    steps: [
-      { t: "Otevřete Teams", d: "Asistent běží v Microsoft Teams jako bot. Žádný nový software, žádné přihlašování — otevřete chat a začněte psát." },
-      { t: "Popište úkol", d: "Napište, co potřebujete: fakturu pro klienta nebo výdaj k zaznamenání. Pište přirozeně — žádný speciální formát ani příkazy nejsou potřeba." },
-      { t: "AI porozumí", d: "Asistent vytáhne detaily — klient, částka, datum, kód účtu — a připraví záznam do Xero pro vaši kontrolu." },
-      { t: "Vy potvrdíte", d: "Asistent vám ukáže přehled toho, co vytvoří. Schválíte jedinou odpovědí — nebo ho požádáte nejprve upravit libovolný detail." },
-      { t: "Uloženo v Xero ✓", d: "Faktura nebo výdaj jsou vytvořeny přímo ve vaší organizaci Xero přes API. Obdržíte potvrzení s referenčním číslem Xero." }
-    ],
-    casesLabel: "Co umí",
-    casesH2: "Postaveno na Xero. <em>Ovládané z Teams.</em>",
-    casesIntro: "Asistent dokáže dotazovat vaše data v Xero i provádět akce. Nyní se zaměřuje na vytváření faktur a evidenci výdajů — dva úkoly, které nejvíce přerušují pracovní den. Další funkce Xero jsou na cestě.",
-    bpLabel: "Ukázkové interakce",
-    bpLabel2: "Ukázkové interakce",
-    cases: [
-      {
-        cat: "Vytváření faktur", title: "Vystavte fakturu v Xero chatem",
-        bullets: [
-          "Vytvořte fakturu napsáním jména kontaktu, částky a splatnosti — asistent doplní zbytek",
-          "Upřesněte položky, množství a kódy účtů v navazující zprávě",
-          "Vyberte stav Koncept nebo Schváleno — obě možnosti jsou podporovány přes Xero Invoices API",
-          "Odešlete fakturu e-mailem kontaktu v Xero přímo z chatu v Teams",
-          "Vyhledejte jakoukoli existující fakturu v Xero podle jména kontaktu nebo čísla faktury"
-        ]
-      },
-      {
-        cat: "Evidence výdajů", title: "Zaznamenejte výdaj v Xero chatem",
-        bullets: [
-          "Zaznamenejte transakci výdaje popsáním nákupu — částka, dodavatel a datum",
-          "Přiřaďte ke kódu účtu Xero a sledovací kategorii ve stejné zprávě",
-          "Výdaj je uložen do Xero jako neodsouhlasená bankovní transakce přes Bank Transactions API",
-          "Zkontrolujte přehled před uložením — upravte libovolné pole v navazující zprávě",
-          "Dotažte se na zaznamenané výdaje za libovolné období jednoduchou otázkou"
-        ]
-      }
-    ],
-    bpLines: [
-      '"Faktura Hargreavess Ltd 58 000 Kč, 30 dni" &rarr; <span class="bl-val">FAK-0087 vytvořena v Xero</span>',
-      '"Pridej polozku: 8 hod. konzultace, 7 250 Kč" &rarr; <span class="bl-val">Položka přidána</span>',
-      '"Odeslat kontaktu" &rarr; <span class="bl-val">Odesláno na accounts@hargreavess.com</span>',
-      '"Ukaž moje faktury v konceptu" &rarr; <span class="bl-val">Nalezeny 3 koncepty v Xero</span>'
-    ],
-    bpLines2: [
-      '"Obed s klientem 2 000 Kč, marketing" &rarr; <span class="bl-val">VYD-0021 uložen v Xero</span>',
-      '"Dodavatel: Premier Inn, hotel 5 800 Kč" &rarr; <span class="bl-val">VYD-0022 vytvořen</span>',
-      '"Priradit k projektu Alpha" &rarr; <span class="bl-val">Sledovací kategorie aktualizována</span>',
-      '"Co jsem evidoval tento tyden?" &rarr; <span class="bl-val">3 výdaje, celkem 9 650 Kč</span>'
-    ],
-    alsoLabel: "Také dostupné přes stejného asistenta",
-    alsoChips: ["Stav faktury", "Pohledávky po splatnosti", "Zůstatky kontaktů", "Evidence faktur dodavatelů", "Poslední transakce", "Zůstatky účtů", "+ další na vyžádání"],
-    intLabel: "Integrace",
-    intH2: "Funguje s <em>Xero</em> přes <em>Microsoft Teams</em>",
-    intIntro: "Asistent MoravaSoft se zabezpečeně propojí s vaší stávající organizací Xero — žádný nový software, žádná migrace dat. Váš tým pokračuje v práci v Microsoft Teams jako vždy.",
-    intNote: "Zabezpečené Xero API · OAuth 2.0 autentizace · MoravaSoft neukládá finanční data · Přístup API omezen na faktury a bankovní transakce · Funguje na každém zařízení s Teams",
-    aboutLabel: "O nás",
-    aboutH2: "Malý tým. <em>Velký dopad.</em>",
-    aboutP1: "MoravaSoft je softwarová firma specializující se na AI automatizaci finančních a účetních operací. Vytváříme asistenty, kteří umožňují majitelům firem a finančním týmům pracovat v Xero přes nástroje, které každodenně používají.",
-    aboutP2: "Náš přístup je jednoduchý: nejlepší nástroj je ten, který máte právě otevřený na obrazovce. Microsoft Teams je místo, kde vaše organizace komunikuje. Přímo tam vložíme vašeho asistenta pro Xero — takže vystavit fakturu nebo zaznamenat výdaj trvá jednu zprávu, ne cestu do portálu.",
-    aboutP3: "Úzce spolupracujeme s každým klientem, abychom porozuměli jeho pracovním postupům, nakonfigurovali asistenta podle jejich nastavení Xero a dodali něco, co tým skutečně chce používat — od prvního dne.",
-    aboutLocation: "Morava, Česká republika · Založeno 2026",
-    ctaH2: "Připraveni mít Xero v Teams?",
-    ctaP: "Zarezervujte live demo a ukážeme vám asistenta při zodpovídání dotazů na Xero, vytváření skutečné faktury a záznamu výdaje — vše z chatu v Teams, přímo v živé organizaci Xero.",
-    ctaBtn: "Požádat o bezplatné demo",
-    contactLabel: "Kontakt", contactH3: "Domluvme si demo",
-    contactP: "Řekněte nám o svém nastavení Xero — velikost firmy a jak váš tým aktuálně řeší fakturaci a výdaje. Demo přizpůsobíme vaší situaci a odpovíme do jednoho pracovního dne.",
-    contactHours: "Po–Pá, pracovní hodiny SEČ",
-    fFirst: "Jméno", fLast: "Příjmení", fEmail: "Pracovní e-mail", fCompany: "Firma / Organizace",
-    fSystem: "Velikost firmy", fSystemDef: "Počet zaměstnanců",
-    fMsg: "Popište vaše nastavení",
-    fMsgPh: "např. Používáme Xero a Microsoft Teams. Tým vystavuje asi 50 faktur mesicne a chci to delat bez otevirani Xero...",
-    fBtn: "Odeslat zprávu", fNote: "Odpovíme do 1 pracovního dne. Žádný spam.",
-    fSuccess: "Dekujeme! Vasi zprávu jsme obdrželi a brzy se ozveme.",
-    modalTitle: "Zpráva odeslána!",
-    modalMsg: "Dekujeme za váš zájem — vaši zprávu jsme obdrželi a ozveme se vám <strong>do jednoho pracovního dne.</strong> Těšíme se, že vám ukážeme, co náš asistent dokáže.",
-    modalClose: "Zavřít",
-    footerCopy: "2026 MoravaSoft · Morava, Česká republika",
-    flHome: "Domů", flHow: "Jak to funguje", flAbout: "O nás", flContact: "Kontakt",
-    aoLabel: "Váš stálý finanční asistent",
-    aoH2: "Jeden chat. Celý váš Xero. <em>Vždy dosažitelný.</em>",
-    aoP1: "Dříve každý úkol v Xero znamenal přerušit práci, otevřít prohlížeč, přihlásit se a přejít na správnou obrazovku. Ať jste chtěli zkontrolovat fakturu, zaznamenat výdaj nebo odpovědět na rychlý finanční dotaz — vždy vás to odvedlo od práce.",
-    aoP2: "S MoravaSoft je váš Xero vždy jen jednu zprávu daleko. Asistent je trvale připojen k vaší organizaci Xero přes zabezpečené API. Položte otázku nebo zadejte akci — reaguje během vteřin, aniž byste opustili Teams.",
-    aoPillars: [
-      { t: "Dostupný vždy, když ho potřebujete", d: "Na místě u klienta, na cestách nebo do pozdě večer — asistent je vždy připraven. Vystavte fakturu nebo zaznamenejte výdaj ve chvíli, kdy k tomu dojde." },
-      { t: "Zapisuje přímo do Xero", d: "Každá faktura a každý výdaj jsou vytvořeny přes Xero API v reálném čase. Záznam se okamžitě objeví ve vaší organizaci Xero — žádná synchronizace, žádný import." },
-      { t: "Přirozený jazyk, jakýkoli jazyk", d: "Pište česky, anglicky nebo nizozemsky — nebo přepínejte uprostřed konverzace. Asistent automaticky rozpozná váš jazyk. Žádné příkazy k učení." },
-      { t: "Vždy potvrzuje před uložením", d: "Asistent vám ukáže, co vytvoří, a čeká na vaše schválení. Zůstáváte v kontrole — do Xero se nezapíše nic bez vašeho výslovného souhlasu." }
-    ],
-    intSubXero: "Xero · Cloud účetnictví a finance",
-    intSubM365: "Azure AD · Váš stávající tenant",
-    intSubTeams: "Microsoft · Vaše každodenní prostředí",
-    statLabels: [
-      "Vystavujte faktury a evidujte výdaje kdykoli, odkudkoli",
-      "Žádné nové aplikace — běží v Microsoft Teams, který již máte",
-      "Záznamy zapsané přímo do Xero přes API v reálném čase",
-      "Od zprávy k potvrzeného záznamu v Xero"
-    ],
-    contactAddress: "Morava, Česká republika",
-    fCompanyPh: "Název vaší firmy",
-    fOpts: ["1 – 10 zaměstnanců", "11 – 50 zaměstnanců", "51 – 200 zaměstnanců", "200+ zaměstnanců"]
-  }
-};
-
-function setLang(l) {
-  var t = T[l];
-  document.documentElement.lang = l;
-  function s(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
-  function st(id, txt) { var e = document.getElementById(id); if (e) e.textContent = txt; }
-
-  st('nav-how', t.navHow); st('nav-cases', t.navCases); st('nav-about', t.navAbout); st('nav-demo', t.navDemo);
-  s('hero-h1', t.heroH1); st('hero-eyebrow', t.heroEyebrow); st('hero-sub', t.heroSub);
-  st('hero-cta1', t.heroCta1); st('hero-cta2', t.heroCta2);
-  st('chat-title', t.chatTitle); st('chat-status-text', t.chatStatusText); st('chat-date', t.chatDate);
-  s('chat-user', t.chatUser); s('chat-ai-reply', t.chatAiReply); s('chat-user2', t.chatUser2); s('chat-ai-brief', t.chatAiBrief);
-  st('how-label', t.howLabel); s('how-h2', t.howH2); st('how-intro', t.howIntro);
-  t.steps.forEach(function(x, i) { st('step-t' + i, x.t); st('step-d' + i, x.d); });
-  st('ao-label', t.aoLabel); s('ao-h2', t.aoH2); st('ao-p1', t.aoP1); st('ao-p2', t.aoP2);
-  if (t.aoPillars) t.aoPillars.forEach(function(x, i) { st('ao-t' + (i+1), x.t); st('ao-d' + (i+1), x.d); });
-  st('cases-label', t.casesLabel); s('cases-h2', t.casesH2); st('cases-intro', t.casesIntro);
-  st('bp-label', t.bpLabel); st('bp-label2', t.bpLabel2);
-  if (t.bpLines) t.bpLines.forEach(function(html, i) { s('bp-line' + (i+1), html); });
-  if (t.bpLines2) t.bpLines2.forEach(function(html, i) { s('bp-line' + (i+5), html); });
-  t.cases.forEach(function(x, i) {
-    st('case-cat' + i, x.cat); st('case-title' + i, x.title);
-    var ul = document.getElementById('case-bullets' + i);
-    if (ul) ul.innerHTML = x.bullets.map(function(b) { return '<li>' + b + '</li>'; }).join('');
-  });
-  st('also-label', t.alsoLabel);
-  var chips = document.getElementById('also-chips');
-  if (chips) chips.innerHTML = t.alsoChips.map(function(c) { return '<span>' + c + '</span>'; }).join('');
-  st('int-label', t.intLabel); s('int-h2', t.intH2); st('int-intro', t.intIntro); st('int-note', t.intNote);
-  st('int-sub-xero', t.intSubXero); st('int-sub-m365', t.intSubM365); st('int-sub-teams', t.intSubTeams);
-  st('about-label', t.aboutLabel); s('about-h2', t.aboutH2);
-  st('about-p1', t.aboutP1); st('about-p2', t.aboutP2); st('about-p3', t.aboutP3);
-  st('about-location', '\uD83D\uDCCD ' + t.aboutLocation);
-  if (t.statLabels) t.statLabels.forEach(function(txt, i) { st('stat-label' + i, txt); });
-  s('cta-h2', t.ctaH2); st('cta-p', t.ctaP); st('cta-btn', t.ctaBtn);
-  st('contact-label', t.contactLabel); st('contact-h3', t.contactH3); st('contact-p', t.contactP);
-  st('contact-address', t.contactAddress); st('contact-hours', t.contactHours);
-  st('f-first-lbl', t.fFirst + ' *'); st('f-last-lbl', t.fLast + ' *');
-  st('f-email-lbl', t.fEmail + ' *'); st('f-company-lbl', t.fCompany);
-  st('f-system-lbl', t.fSystem); st('f-system-def', t.fSystemDef);
-  st('f-msg-lbl', t.fMsg + ' *');
-  var fmsg = document.getElementById('f-msg'); if (fmsg) fmsg.placeholder = t.fMsgPh;
-  var fci = document.getElementById('f-company-input'); if (fci) fci.placeholder = t.fCompanyPh;
-  if (t.fOpts) { ['f-opt1','f-opt2','f-opt3','f-opt4'].forEach(function(id, i) { st(id, t.fOpts[i]); }); }
-  st('f-submit', t.fBtn); st('f-note', t.fNote);
-  st('modal-title', t.modalTitle); s('modal-msg', t.modalMsg); st('modal-close-btn', t.modalClose);
-  st('footer-copy', t.footerCopy);
-  st('fl-home', t.flHome); st('fl-how', t.flHow); st('fl-about', t.flAbout); st('fl-contact', t.flContact);
-  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === l); });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  setLang('en');
-
-  var logoImg = document.getElementById('nav-logo-img');
-  var evaAvatar = document.getElementById('eva-avatar-img');
-  if (logoImg && evaAvatar) evaAvatar.src = logoImg.src;
-
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        setTimeout(function() { e.target.classList.add('visible'); }, e.target.dataset.delay || 0);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-in').forEach(function(el, i) {
-    el.dataset.delay = (i % 6) * 80;
-    obs.observe(el);
-  });
-
-  const form = document.getElementById('contactForm');
-  const modal = document.getElementById('thankYouModal');
-  const btn = form.querySelector('button[type="submit"]');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    fetch('https://formsubmit.co/ajax/info@moravasoft.com', {
-      method: 'POST',
-      body: new FormData(form)
-    })
-    .then(res => res.json())
-    .then(data => {
-      form.reset();
-      if (modal) modal.classList.add('active');
-    })
-    .catch(err => {
-      alert('Something went wrong — please email us at info@moravasoft.com');
-      console.error(err);
-    })
-    .finally(() => {
-      btn.disabled = false;
-      btn.textContent = originalText;
-    });
-  });
-
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('active');
-    });
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && modal) modal.classList.remove('active');
-  });
-});
-</script>
-
-<!-- THANK YOU MODAL -->
-<div class="modal-overlay" id="thankYouModal">
-  <div class="modal-box">
-    <div class="modal-icon">✉️</div>
-    <div class="modal-title" id="modal-title">Message sent!</div>
-    <p class="modal-msg" id="modal-msg">Thanks for reaching out — we've received your message and will get back to you <strong>within one business day.</strong> We look forward to showing you what the assistant can do for your store. ☀️</p>
-    <button class="modal-close" id="modal-close-btn" onclick="document.getElementById('thankYouModal').classList.remove('active')">Close</button>
-  </div>
-</div>
+        document.addEventListener('DOMContentLoaded', function () {
+            setLang('en');
+        });
+    </script>
 
 </body>
+
 </html>
